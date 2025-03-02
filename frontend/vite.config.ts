@@ -105,6 +105,10 @@ export default defineConfig({
 				changeOrigin: true,
 			}
 		},
+		fs: {
+			// Allow Vite to resolve imports from these directories
+			allow: ['..']
+		},
 	},
 	resolve: {
 		alias: {
@@ -118,6 +122,16 @@ export default defineConfig({
 	},
 	build: {
 		outDir: 'dist',
-		sourcemap: true
+		sourcemap: true,
+		rollupOptions: {
+			// Externalize deps that shouldn't be bundled
+			output: {
+				// Ensure proper chunking
+				manualChunks: {
+					'vendor': ['react', 'react-dom', 'react-router-dom'],
+					'pages': ['./src/pages/index.ts'],
+				}
+			}
+		}
 	}
 });
