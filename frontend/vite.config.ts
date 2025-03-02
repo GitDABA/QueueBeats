@@ -110,5 +110,14 @@ export default defineConfig({
 		alias: {
 			"@": path.resolve(__dirname, "./src"),
 		},
+		extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json']
 	},
+	optimizeDeps: {
+		include: ['react', 'react-dom', 'react-router-dom'],
+		exclude: []
+	},
+	build: {
+		outDir: 'dist',
+		sourcemap: true
+	}
 });

@@ -2,6 +2,7 @@ import { lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import { userRoutes } from "./user-routes";
 import { SuspenseWrapper } from "./components/SuspenseWrapper";
+import ErrorBoundary from "./components/ErrorBoundary";
 
 const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
 const SomethingWentWrongPage = lazy(
@@ -17,10 +18,6 @@ export const router = createBrowserRouter([
         <NotFoundPage />
       </SuspenseWrapper>
     ),
-    errorElement: (
-      <SuspenseWrapper>
-        <SomethingWentWrongPage />
-      </SuspenseWrapper>
-    ),
+    errorElement: <ErrorBoundary />,
   },
 ]);

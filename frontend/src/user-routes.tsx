@@ -3,21 +3,21 @@ import { lazy } from "react";
 import { RouteObject } from "react-router";
 import { SuspenseWrapper } from "./components/SuspenseWrapper";
 
-const AddSong = lazy(() => import("./pages/AddSong.tsx"));
-const App = lazy(() => import("./pages/App.tsx"));
-const CreateQueue = lazy(() => import("./pages/CreateQueue.tsx"));
-const Dashboard = lazy(() => import("./pages/Dashboard.tsx"));
-const ForgotPassword = lazy(() => import("./pages/ForgotPassword.tsx"));
-const GuestQueueView = lazy(() => import("./pages/GuestQueueView.tsx"));
-const JoinQueue = lazy(() => import("./pages/JoinQueue.tsx"));
-const Login = lazy(() => import("./pages/Login.tsx"));
-const Profile = lazy(() => import("./pages/Profile.tsx"));
-const QueueView = lazy(() => import("./pages/QueueView.tsx"));
-const ResetPassword = lazy(() => import("./pages/ResetPassword.tsx"));
-const Setup = lazy(() => import("./pages/Setup.tsx"));
-const Signup = lazy(() => import("./pages/Signup.tsx"));
-const SignupConfirmation = lazy(() => import("./pages/SignupConfirmation.tsx"));
-const SpotifyCallback = lazy(() => import("./pages/SpotifyCallback.tsx"));
+const AddSong = lazy(() => import("./pages/AddSong"));
+const App = lazy(() => import("./pages/App"));
+const CreateQueue = lazy(() => import("./pages/CreateQueue"));
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+const ForgotPassword = lazy(() => import("./pages/ForgotPassword"));
+const GuestQueueView = lazy(() => import("./pages/GuestQueueView"));
+const JoinQueue = lazy(() => import("./pages/JoinQueue"));
+const Login = lazy(() => import("./pages/Login"));
+const Profile = lazy(() => import("./pages/Profile"));
+const QueueView = lazy(() => import("./pages/QueueView"));
+const ResetPassword = lazy(() => import("./pages/ResetPassword"));
+const Setup = lazy(() => import("./pages/Setup"));
+const Signup = lazy(() => import("./pages/Signup"));
+const SignupConfirmation = lazy(() => import("./pages/SignupConfirmation"));
+const SpotifyCallback = lazy(() => import("./pages/SpotifyCallback"));
 
 export const userRoutes: RouteObject[] = [
 	{ path: "/add-song", element: <SuspenseWrapper><AddSong /></SuspenseWrapper>},
