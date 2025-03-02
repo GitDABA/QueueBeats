@@ -8,8 +8,9 @@
     "start:backend": "node backend/server.js",
     "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
     "build": "cd frontend && npm run build",
-    "build:netlify": "cd frontend && npm run build && cd ../backend && pip install -r requirements.txt --target ./netlify/functions/deps",
-    "postinstall": "cd frontend && npm install && cd ../backend && pip install -r requirements.txt"
+    "build:netlify": "cd frontend && npm run build && cd ../backend && bash -c \"if command -v pip &> /dev/null; then pip install -r requirements.txt --target ./netlify/functions/deps; else echo 'Warning: pip not found'; fi\"",
+    "postinstall": "bash -c \"cd frontend && bash ./install.sh && cd ../backend && bash ./install.sh\"",
+    "dependency_installation": "npm install && npm run postinstall"
   },
   "dependencies": {
     "@fastify/aws-lambda": "^3.4.0",

@@ -1,11 +1,12 @@
 [build]
   base = "/"
   publish = "frontend/dist"
-  command = "npm run build:netlify"
+  command = "bash ./dependency_installation.sh && npm run build:netlify"
   functions = "backend/netlify/functions"
 
 [build.environment]
   NODE_VERSION = "18"
+  PYTHON_VERSION = "3.10"
 
 [functions]
   directory = "backend/netlify/functions"
