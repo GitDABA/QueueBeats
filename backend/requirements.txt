@@ -1,0 +1,11 @@
+# Workspace version: 1.42.60
+# databutton==0.38.34  # Commented out as it has strict Python version requirements
+uvicorn[standard]>=0.29.0,<0.30.0
+python-multipart>=0.0.9
+fastapi>=0.111.0
+ipykernel>=6.29.5
+openai
+beautifulsoup4
+requests
+supabase
+python-dotenv

@@ -1,0 +1,23 @@
+{
+  "name": "queue-beats",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:frontend": "node frontend/server.js",
+    "start:backend": "node backend/server.js",
+    "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
+    "build": "cd frontend && npm run build",
+    "build:netlify": "cd frontend && npm run build && cd ../backend && pip install -r requirements.txt --target ./netlify/functions/deps",
+    "postinstall": "cd frontend && npm install && cd ../backend && pip install -r requirements.txt"
+  },
+  "dependencies": {
+    "@fastify/aws-lambda": "^3.4.0",
+    "@fastify/cors": "^8.5.0",
+    "axios": "^1.8.1",
+    "concurrently": "^8.2.1",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "fastify": "^4.25.2"
+  }
+}

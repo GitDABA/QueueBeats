@@ -1,0 +1,39 @@
+[build]
+  base = "/"
+  publish = "frontend/dist"
+  command = "npm run build:netlify"
+  functions = "backend/netlify/functions"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+[functions]
+  directory = "backend/netlify/functions"
+  node_bundler = "esbuild"
+
+# Handle API requests
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+  force = true
+
+# Handle all supabase config requests
+[[redirects]]
+  from = "/supabase-config/*"
+  to = "/.netlify/functions/api/supabase-config/:splat"
+  status = 200
+  force = true
+
+# Handle OAuth callback
+[[redirects]]
+  from = "/auth/callback/*"
+  to = "/.netlify/functions/oauth-callback/:splat"
+  status = 200
+  force = true
+
+# Handle SPA routing
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
