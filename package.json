@@ -10,7 +10,7 @@
     "start:backend": "cd backend && ./run.sh",
     "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
     "build": "cd frontend && npm run build",
-    "build:frontend": "cd frontend && yarn install --ignore-engines && yarn build",
+    "build:frontend": "cd frontend && npm install && npm run build",
     "build:backend": "pip install -r backend/requirements.txt --target ./netlify/functions/deps && bash ./copy-functions.sh",
     "build:netlify": "npm run build:frontend && node scripts/prepare-python-deps.js && npm run build:backend",
     "postinstall": "bash -c \"cd frontend && bash ./install.sh && cd ../backend && bash ./install.sh\"",
