@@ -1,12 +1,13 @@
 [build]
   base = "/"
   publish = "frontend/dist"
-  command = "bash ./dependency_installation.sh && npm run build:netlify"
+  command = "bash ./dependency_installation.sh && npm run build:netlify || (echo 'Build script failed, but attempting to continue with build anyway' && cd frontend && npm install --legacy-peer-deps --force && npm run build)"
   functions = "netlify/functions"
 
 [build.environment]
   NODE_VERSION = "18"
   PYTHON_VERSION = "3.9"
+  NPM_FLAGS = "--legacy-peer-deps --no-audit --no-fund"
 
 [functions]
   directory = "netlify/functions"
