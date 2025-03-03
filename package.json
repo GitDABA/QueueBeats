@@ -10,7 +10,7 @@
     "start:backend": "cd backend && ./run.sh",
     "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
     "build": "cd frontend && npm run build",
-    "build:netlify": "cd frontend && npm install --legacy-peer-deps && node fix-dependencies.js && npm run build && cd ../backend && bash -c \"if command -v pip &> /dev/null; then pip install -r requirements.txt --target ./netlify/functions/deps; else echo 'Warning: pip not found'; fi\"",
+    "build:netlify": "cd frontend && npm install --legacy-peer-deps && node fix-dependencies.js && npm run build && cd ../backend && bash -c \"if command -v pip &> /dev/null; then pip install -r requirements.txt --target ./netlify/functions/deps; else echo 'Warning: pip not found'; fi\" && cd .. && chmod +x ./copy-functions.sh && ./copy-functions.sh",
     "postinstall": "bash -c \"cd frontend && bash ./install.sh && cd ../backend && bash ./install.sh\"",
     "dependency_installation": "npm install && npm run postinstall",
     "netlify:dev": "netlify dev",
