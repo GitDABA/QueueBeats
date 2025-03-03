@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "Music Queue Management App",
   "main": "index.js",
+  "engines": {
+    "node": ">=20.18.0",
+    "npm": ">=10.0.0"
+  },
   "scripts": {
     "start:frontend:wrapper": "node frontend/server.js",
     "start:frontend": "cd frontend && npm run dev",
