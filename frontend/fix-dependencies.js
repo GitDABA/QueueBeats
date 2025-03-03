@@ -35,10 +35,37 @@ const checkSmoothScrollbar = () => {
   return true;
 };
 
+// Check if Material UI modules exist
+const checkMaterialUI = () => {
+  const materialUIIconsPath = path.join(__dirname, 'node_modules', '@material-ui', 'icons');
+  const materialUICorePath = path.join(__dirname, 'node_modules', '@material-ui', 'core');
+  
+  let allFound = true;
+  
+  if (!fs.existsSync(materialUIIconsPath)) {
+    console.log('@material-ui/icons module not found, attempting to install it directly');
+    allFound = runCommand('npm install @material-ui/icons@4.11.3 --no-save --legacy-peer-deps') && allFound;
+  } else {
+    console.log('@material-ui/icons module found');
+  }
+  
+  if (!fs.existsSync(materialUICorePath)) {
+    console.log('@material-ui/core module not found, attempting to install it directly');
+    allFound = runCommand('npm install @material-ui/core@4.12.4 --no-save --legacy-peer-deps') && allFound;
+  } else {
+    console.log('@material-ui/core module found');
+  }
+  
+  return allFound;
+};
+
 // Fix dependencies
 const fixDependencies = () => {
   // First check if smooth-scrollbar is properly installed
   checkSmoothScrollbar();
+  
+  // Check if Material UI modules are properly installed
+  checkMaterialUI();
 
   // Run npm dedupe to reduce duplicate packages
   runCommand('npm dedupe --legacy-peer-deps');
