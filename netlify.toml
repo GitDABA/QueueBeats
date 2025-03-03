@@ -1,11 +1,11 @@
 [build]
   base = "/"
   publish = "frontend/dist"
-  command = "bash ./dependency_installation.sh && npm run build:netlify"
+  command = "npm run build:frontend && npm run build:backend"
   functions = "netlify/functions"
 
 [build.environment]
-  NODE_VERSION = "20.18.0"
+  NODE_VERSION = "20"
   PYTHON_VERSION = "3.9"
   NPM_FLAGS = "--no-audit --no-fund"
 
