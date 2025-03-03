@@ -11,12 +11,16 @@ import { Spinner } from "../components/Spinner";
 import { AuthInit } from "../components/AuthInit";
 import { AuthProvider } from "../components/AuthProvider";
 import { ProtectedRoute } from "../components/ProtectedRoute";
+import { toast } from "sonner";
+import { ToasterProvider } from "../components/ToasterProvider";
+import MainLayout from "../components/MainLayout";
 
 export default function Dashboard() {
   return (
     <AuthInit>
       <AuthProvider>
         <ProtectedRoute>
+          <ToasterProvider />
           <DashboardContent />
         </ProtectedRoute>
       </AuthProvider>
@@ -34,6 +38,7 @@ function DashboardContent() {
   const [isSpotifyConnected, setIsSpotifyConnected] = useState(false);
   const [isCheckingSpotify, setIsCheckingSpotify] = useState(false);
   const [connectingToSpotify, setConnectingToSpotify] = useState(false);
+  const [isSpotifyConnectionChecked, setIsSpotifyConnectionChecked] = useState(false);
   
   useEffect(() => {
     // Redirect if not authenticated
@@ -46,48 +51,119 @@ function DashboardContent() {
     const checkSpotifyConnection = async () => {
       if (!user) return;
       
+      // Don't check again if already checking
+      if (isCheckingSpotify) return;
+      
       try {
         setIsCheckingSpotify(true);
-        const connected = await isConnectedToSpotify(user.id);
+        console.log('Checking Spotify connection for user:', user.id);
+        
+        // Add retry logic with backoff
+        let attempt = 0;
+        const maxAttempts = 2;
+        let connected = false;
+        
+        while (attempt < maxAttempts && !connected) {
+          try {
+            // If this is a retry, wait with exponential backoff
+            if (attempt > 0) {
+              const backoffMs = Math.pow(2, attempt) * 1000;
+              console.log(`Retrying Spotify connection check (attempt ${attempt+1}/${maxAttempts}) after ${backoffMs}ms`);
+              await new Promise(resolve => setTimeout(resolve, backoffMs));
+            }
+            
+            // Check connection
+            connected = await isConnectedToSpotify(user.id);
+            
+            // If we got a response (whether true or false), we can stop trying
+            break;
+          } catch (attemptError) {
+            console.error(`Spotify connection check attempt ${attempt+1} failed:`, attemptError);
+            attempt++;
+          }
+        }
+        
+        // Update state with final result
         setIsSpotifyConnected(connected);
+        
       } catch (error) {
         console.error('Error checking Spotify connection:', error);
+        // Set to false on error to be safe
+        setIsSpotifyConnected(false);
       } finally {
         setIsCheckingSpotify(false);
       }
     };
-    
+
     // Fetch user profile
     const fetchProfile = async () => {
       try {
         setLoading(true);
         
+        // Try to fetch the profile
         const { data, error } = await supabase
           .from('profiles')
           .select('id, username, full_name, avatar_url, website')
           .eq('id', user.id)
           .single();
         
-        if (error) throw error;
-        
-        setProfile(data as Profile);
+        // If there's an error OR no data, create a default profile object to avoid UI issues
+        if (error || !data) {
+          console.warn('Could not fetch profile, using default placeholder:', error);
+          // Use a default profile as a fallback
+          setProfile({
+            id: user.id,
+            created_at: new Date().toISOString(),
+            updated_at: null,
+            username: null,
+            full_name: null,
+            avatar_url: null,
+            website: null,
+          });
+        } else {
+          setProfile(data as Profile);
+        }
       } catch (error) {
         console.error('Error fetching profile:', error);
+        // Even on error, set a default profile to prevent UI issues
+        setProfile({
+          id: user.id,
+          created_at: new Date().toISOString(),
+          updated_at: null,
+          username: null,
+          full_name: null,
+          avatar_url: null,
+          website: null,
+        });
       } finally {
         setLoading(false);
       }
     };
 
-    // Fetch user queues
+    // Fetch user queues with timeout and error handling
     const fetchQueues = async () => {
       if (!user) return;
       
       try {
         setLoadingQueues(true);
-        const userQueues = await getUserQueues(user.id);
-        setQueues(userQueues);
+        
+        // Add timeout to prevent hanging
+        const fetchPromise = getUserQueues(user.id);
+        const timeoutPromise = new Promise<Queue[]>((_, reject) => {
+          setTimeout(() => reject(new Error('Fetch queues timed out')), 5000);
+        });
+        
+        try {
+          const userQueues = await Promise.race([fetchPromise, timeoutPromise]);
+          setQueues(userQueues);
+        } catch (timeoutError) {
+          console.error('Error or timeout fetching queues:', timeoutError);
+          // On timeout, set empty queues array
+          setQueues([]);
+        }
       } catch (error) {
-        console.error('Error fetching queues:', error);
+        console.error('Exception in fetchQueues:', error);
+        setQueues([]);
       } finally {
         setLoadingQueues(false);
       }
@@ -95,7 +171,19 @@ function DashboardContent() {
     
     fetchProfile();
     fetchQueues();
-    checkSpotifyConnection();
+    
+    // Use a debounce for Spotify connection check to prevent rapid API calls
+    const spotifyCheckTimeout = setTimeout(() => {
+      if (!isCheckingSpotify && !isSpotifyConnectionChecked) {
+        checkSpotifyConnection();
+        setIsSpotifyConnectionChecked(true);
+      }
+    }, 1000);
+    
+    return () => {
+      // Clean up timeout on unmount
+      clearTimeout(spotifyCheckTimeout);
+    };
   }, [user, navigate]);
   
   const handleSignOut = async () => {
@@ -108,11 +196,98 @@ function DashboardContent() {
     
     try {
       setConnectingToSpotify(true);
-      const authUrl = await getAuthUrl();
-      window.location.href = authUrl;
+      
+      // Track start time for performance monitoring
+      const startTime = Date.now();
+      
+      // Add retry mechanism with exponential backoff - attempt up to 3 times
+      for (let attempt = 1; attempt <= 3; attempt++) {
+        try {
+          console.log(`Attempting to connect to Spotify (Attempt ${attempt}/3)`);
+          
+          // Add timeout for the getAuthUrl call to prevent hanging
+          const authUrlPromise = getAuthUrl();
+          const timeoutPromise = new Promise<string>((_, reject) => {
+            setTimeout(() => reject(new Error('Spotify auth URL request timed out')), 5000);
+          });
+          
+          const authUrl = await Promise.race([authUrlPromise, timeoutPromise]);
+          
+          if (!authUrl || !authUrl.includes('accounts.spotify.com')) {
+            throw new Error('Invalid Spotify authorization URL received');
+          }
+          
+          // Log performance metrics
+          const elapsed = Date.now() - startTime;
+          console.log(`Successfully obtained Spotify auth URL in ${elapsed}ms`);
+          
+          // Save state to localStorage to detect successful return from Spotify OAuth
+          localStorage.setItem('spotify_connect_attempt', 'true');
+          localStorage.setItem('spotify_connect_timestamp', String(Date.now()));
+          
+          // Navigate to Spotify auth
+          window.location.href = authUrl;
+          return; // Success, exit the function
+        } catch (error) {
+          console.error(`Spotify connection attempt ${attempt} failed:`, 
+                        error instanceof Error ? error.message : String(error));
+          
+          // If this is the last attempt, throw the error to be caught by the outer try/catch
+          if (attempt === 3) throw error;
+          
+          // Otherwise wait with exponential backoff and try again
+          const backoffMs = Math.pow(2, attempt) * 1000;
+          console.log(`Retrying in ${backoffMs}ms...`);
+          await new Promise(resolve => setTimeout(resolve, backoffMs));
+        }
+      }
     } catch (error) {
-      console.error('Error connecting to Spotify:', error);
-      alert('Failed to connect to Spotify. Please try again.');
+      console.error('All attempts to connect to Spotify failed:', 
+                    error instanceof Error ? error.stack : String(error));
+      
+      // Provide more specific error messages based on the error type
+      let errorMessage = 'Failed to connect to Spotify. Please try again.';
+      let errorDescription = 'The Spotify integration could not be initialized.';
+      
+      if (error instanceof Error) {
+        // Network-related errors
+        if (error.message.includes('Network') || 
+            error.message.includes('ECONNREFUSED') || 
+            error.message.includes('fetch') ||
+            error.message.includes('Failed to fetch')) {
+          errorMessage = 'Network error connecting to Spotify.';
+          errorDescription = 'Please check your internet connection and try again.';
+        } 
+        // Timeout errors
+        else if (error.message.includes('timeout')) {
+          errorMessage = 'Connection to Spotify timed out.';
+          errorDescription = 'The server is taking too long to respond. Please try again later.';
+        } 
+        // Configuration errors
+        else if (error.message.includes('config') || error.message.includes('client_id')) {
+          errorMessage = 'Spotify configuration error.';
+          errorDescription = 'App configuration is missing required Spotify credentials.';
+        }
+        // Authentication errors
+        else if (error.message.includes('auth') || error.message.includes('token')) {
+          errorMessage = 'Spotify authentication error.';
+          errorDescription = 'There was a problem with your Spotify credentials. Please try reconnecting.';
+        }
+        // Invalid URL errors
+        else if (error.message.includes('URL') || error.message.includes('Invalid')) {
+          errorMessage = 'Invalid response from Spotify.';
+          errorDescription = 'The application received an invalid response from Spotify. Please try again.';
+        }
+      }
+      
+      // Show error toast with more helpful information
+      toast.error(errorMessage, {
+        description: errorDescription
+      });
+      
+      // Reset connection state
+      setIsSpotifyConnected(false);
+    } finally {
       setConnectingToSpotify(false);
     }
   };
@@ -129,13 +304,10 @@ function DashboardContent() {
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      {/* Header/Navigation */}
-      <Navigation />
-
-      <main className="container mx-auto px-4 py-8">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-3xl font-bold mb-6">Welcome{profile?.username ? `, ${profile.username}` : ''}!</h1>
+    <MainLayout>
+      <main className="container mx-auto px-4 py-8 flex justify-center">
+        <div className="max-w-4xl mx-auto w-full">
+          <h1 className="text-3xl font-bold mb-6 text-center">Welcome{profile?.username ? `, ${profile.username}` : ''}!</h1>
           
           <div className="grid grid-cols-1 md:grid-cols-12 gap-6 mb-8">
             <div className="md:col-span-7 bg-black/30 backdrop-blur-sm p-6 rounded-xl border border-white/10 shadow-lg">
@@ -236,18 +408,25 @@ function DashboardContent() {
               )}
             </div>
             
-            <div className="bg-black/30 backdrop-blur-sm p-6 rounded-xl border border-white/10 shadow-lg">
+            <div className="md:col-span-5 bg-black/30 backdrop-blur-sm p-6 rounded-xl border border-white/10 shadow-lg flex flex-col">
               <h2 className="text-xl font-bold mb-4 flex items-center">
                 <span className="mr-2 text-purple-400 text-2xl">🎧</span>
                 Recent Activity
               </h2>
-              <p className="text-muted-foreground mb-4">No recent activity to show.</p>
-              <Button 
-                variant="outline" 
-                onClick={() => navigate('/join-queue')}
-              >
-                Join a Queue
-              </Button>
+              <div className="flex-1 flex flex-col items-center justify-center py-10 border border-dashed border-white/20 rounded-lg">
+                <div className="w-16 h-16 mx-auto flex items-center justify-center rounded-full bg-black/50 mb-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <p className="text-muted-foreground mb-4 text-center">No recent activity to show.</p>
+                <Button 
+                  variant="outline" 
+                  onClick={() => navigate('/join-queue')}
+                >
+                  Join a Queue
+                </Button>
+              </div>
             </div>
           </div>
           
@@ -301,6 +480,6 @@ function DashboardContent() {
           </div>
         </div>
       </main>
-    </div>
+    </MainLayout>
   );
 }

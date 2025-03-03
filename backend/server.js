@@ -2,9 +2,14 @@ const express = require('express');
 const { spawn } = require('child_process');
 const path = require('path');
 const cors = require('cors');
+const dotenv = require('dotenv');
+
+// Load environment variables from .env file
+dotenv.config({ path: path.join(__dirname, '..', '.env') });
 
 const app = express();
-const port = 3336;
+// Use BACKEND_PORT for both Express and FastAPI
+const port = parseInt(process.env.BACKEND_PORT || '8001', 10);
 
 // Add CORS support
 app.use(cors());
@@ -12,8 +17,8 @@ app.use(express.json());
 
 // Start FastAPI server as a child process
 const startFastAPI = () => {
-  console.log('Starting FastAPI server...');
-  const pythonProcess = spawn('python', ['-m', 'uvicorn', 'main:app', '--reload', '--host', '127.0.0.1', '--port', '8000'], {
+  console.log(`Starting FastAPI server on port ${port}...`);
+  const pythonProcess = spawn('python', ['-m', 'uvicorn', 'main:app', '--reload', '--host', '127.0.0.1', '--port', port.toString()], {
     cwd: path.join(__dirname),
     env: process.env,
     stdio: 'inherit'
@@ -47,11 +52,12 @@ app.get('/health', (req, res) => {
 app.use('*', (req, res) => {
   res.status(404).json({ 
     status: 'error', 
-    message: 'Route not found on Express server. Try accessing the FastAPI server directly at http://localhost:8000' 
+    message: `Route not found on Express server. Try accessing the FastAPI server directly at http://localhost:${port}` 
   });
 });
 
+// Start Express server
 app.listen(port, () => {
   console.log(`Backend server running at http://localhost:${port}`);
-  console.log(`FastAPI server should be available at http://localhost:8000`);
+  console.log(`FastAPI server should be available at http://localhost:${port}`);
 });

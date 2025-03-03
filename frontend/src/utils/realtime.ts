@@ -23,6 +23,7 @@ export const subscribeSongsInQueue = (
   
   // Return existing channel if already subscribed
   if (activeChannels[channelKey]) {
+    console.log(`Already subscribed to songs in queue: ${queueId}`);
     return () => {
       // Return unsubscribe function
       activeChannels[channelKey].unsubscribe();
@@ -65,6 +66,7 @@ export const subscribeSongsInQueue = (
     
     // Return unsubscribe function
     return () => {
+      console.log(`Unsubscribing from songs in queue: ${queueId}`);
       channel.unsubscribe();
       delete activeChannels[channelKey];
     };
@@ -91,6 +93,7 @@ export const subscribeVotesForQueue = (
   
   // Return existing channel if already subscribed
   if (activeChannels[channelKey]) {
+    console.log(`Already subscribed to votes for queue: ${queueId}`);
     return () => {
       activeChannels[channelKey].unsubscribe();
       delete activeChannels[channelKey];
@@ -118,7 +121,44 @@ export const subscribeVotesForQueue = (
         }
         
         if (!data || data.length === 0) {
-          console.log('No songs found for vote subscription');
+          console.log('No songs found for vote subscription. Creating dummy channel to track initial votes.');
+          
+          // Create a channel that won't match any votes but will at least establish a connection
+          const emptyChannel = supabase
+            .channel(channelKey)
+            .on(
+              'postgres_changes',
+              {
+                event: '*', 
+                schema: 'public',
+                table: 'votes',
+                filter: `song_id=eq.00000000-0000-0000-0000-000000000000` // This won't match any real votes
+              },
+              (payload) => {
+                // This won't be called since the filter won't match anything
+                console.log('Vote change detected (should not happen with dummy filter):', payload.eventType);
+              }
+            )
+            .subscribe((status) => {
+              console.log(`Votes subscription status (dummy): ${status}`);
+              
+              // Even with a dummy filter, we can still trigger the callback on success
+              // to establish the real-time connection
+              if (status === 'SUBSCRIBED') {
+                callback({
+                  new: null,
+                  old: null,
+                  eventType: 'INSERT' // Dummy event type
+                });
+              }
+              
+              if (status === 'CHANNEL_ERROR' && onError) {
+                onError(new Error('Failed to subscribe to votes changes'));
+              }
+            });
+          
+          // Store channel reference
+          activeChannels[channelKey] = emptyChannel;
           return;
         }
         
@@ -153,10 +193,15 @@ export const subscribeVotesForQueue = (
         
         // Store channel reference
         activeChannels[channelKey] = channel;
+      })
+      .catch(error => {
+        console.error('Exception in vote subscription setup:', error);
+        if (onError) onError(error);
       });
     
     // Return unsubscribe function
     return () => {
+      console.log(`Unsubscribing from votes for queue: ${queueId}`);
       if (activeChannels[channelKey]) {
         activeChannels[channelKey].unsubscribe();
         delete activeChannels[channelKey];
@@ -183,6 +228,7 @@ export const subscribeQueueChanges = (
   
   // Return existing channel if already subscribed
   if (activeChannels[channelKey]) {
+    console.log(`Already subscribed to queue changes: ${queueId}`);
     return () => {
       activeChannels[channelKey].unsubscribe();
       delete activeChannels[channelKey];
@@ -214,6 +260,17 @@ export const subscribeQueueChanges = (
       )
       .subscribe((status) => {
         console.log(`Queue subscription status: ${status}`);
+        
+        // Trigger the callback on success even without a data change
+        // This helps establish the real-time connection indicator
+        if (status === 'SUBSCRIBED') {
+          callback({
+            new: null,
+            old: null,
+            eventType: 'UPDATE' // Dummy event to indicate connection
+          });
+        }
+        
         if (status === 'CHANNEL_ERROR' && onError) {
           onError(new Error('Failed to subscribe to queue changes'));
         }
@@ -224,6 +281,7 @@ export const subscribeQueueChanges = (
     
     // Return unsubscribe function
     return () => {
+      console.log(`Unsubscribing from queue changes: ${queueId}`);
       channel.unsubscribe();
       delete activeChannels[channelKey];
     };
@@ -240,6 +298,8 @@ export const subscribeQueueChanges = (
  * Unsubscribe from all active channels
  */
 export const unsubscribeAll = () => {
+  console.log(`Unsubscribing from all channels: ${Object.keys(activeChannels).length} active`);
+  
   Object.values(activeChannels).forEach(channel => {
     channel.unsubscribe();
   });

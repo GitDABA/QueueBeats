@@ -4,13 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:frontend": "node frontend/server.js",
-    "start:backend": "node backend/server.js",
+    "start:frontend:wrapper": "node frontend/server.js",
+    "start:backend:wrapper": "node backend/server.js",
+    "start:frontend": "cd frontend && ./run.sh",
+    "start:backend": "cd backend && ./run.sh",
     "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
     "build": "cd frontend && npm run build",
     "build:netlify": "cd frontend && npm run build && cd ../backend && bash -c \"if command -v pip &> /dev/null; then pip install -r requirements.txt --target ./netlify/functions/deps; else echo 'Warning: pip not found'; fi\"",
     "postinstall": "bash -c \"cd frontend && bash ./install.sh && cd ../backend && bash ./install.sh\"",
-    "dependency_installation": "npm install && npm run postinstall"
+    "dependency_installation": "npm install && npm run postinstall",
+    "netlify:dev": "netlify dev",
+    "netlify:build": "netlify build",
+    "netlify:test": "node netlify-test.js"
   },
   "dependencies": {
     "@fastify/aws-lambda": "^3.4.0",
@@ -18,7 +23,11 @@
     "axios": "^1.8.1",
     "concurrently": "^8.2.1",
     "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
     "express": "^4.18.2",
     "fastify": "^4.25.2"
+  },
+  "devDependencies": {
+    "node-fetch": "^2.6.9"
   }
 }

@@ -1,0 +1,881 @@
+INFO:     Will watch for changes in these directories: ['/Users/davidbakke/CascadeProjects/queue-beats/backend']
+INFO:     Uvicorn running on http://127.0.0.1:8001 (Press CTRL+C to quit)
+INFO:     Started reloader process [4325] using StatReload
+Traceback (most recent call last):
+  File "/Users/davidbakke/CascadeProjects/queue-beats/backend/main.py", line 105, in import_api_routers
+    api_module = __import__(api_module_prefix + name, fromlist=[name])
+  File "/Users/davidbakke/CascadeProjects/queue-beats/backend/app/apis/__init__.py", line 4, in <module>
+    from . import spotify_auth
+  File "/Users/davidbakke/CascadeProjects/queue-beats/backend/app/apis/spotify_auth/__init__.py", line 3, in <module>
+    import requests
+ModuleNotFoundError: No module named 'requests'
+Traceback (most recent call last):
+  File "/Users/davidbakke/CascadeProjects/queue-beats/backend/main.py", line 105, in import_api_routers
+    api_module = __import__(api_module_prefix + name, fromlist=[name])
+  File "/Users/davidbakke/CascadeProjects/queue-beats/backend/app/apis/__init__.py", line 4, in <module>
+    from . import spotify_auth
+  File "/Users/davidbakke/CascadeProjects/queue-beats/backend/app/apis/spotify_auth/__init__.py", line 3, in <module>
+    import requests
+ModuleNotFoundError: No module named 'requests'
+Traceback (most recent call last):
+  File "/Users/davidbakke/CascadeProjects/queue-beats/backend/main.py", line 105, in import_api_routers
+    api_module = __import__(api_module_prefix + name, fromlist=[name])
+  File "/Users/davidbakke/CascadeProjects/queue-beats/backend/app/apis/__init__.py", line 4, in <module>
+    from . import spotify_auth
+  File "/Users/davidbakke/CascadeProjects/queue-beats/backend/app/apis/spotify_auth/__init__.py", line 3, in <module>
+    import requests
+ModuleNotFoundError: No module named 'requests'
+Traceback (most recent call last):
+  File "/Users/davidbakke/CascadeProjects/queue-beats/backend/main.py", line 105, in import_api_routers
+    api_module = __import__(api_module_prefix + name, fromlist=[name])
+  File "/Users/davidbakke/CascadeProjects/queue-beats/backend/app/apis/__init__.py", line 4, in <module>
+    from . import spotify_auth
+  File "/Users/davidbakke/CascadeProjects/queue-beats/backend/app/apis/spotify_auth/__init__.py", line 3, in <module>
+    import requests
+ModuleNotFoundError: No module named 'requests'
+Traceback (most recent call last):
+  File "/Users/davidbakke/CascadeProjects/queue-beats/backend/main.py", line 105, in import_api_routers
+    api_module = __import__(api_module_prefix + name, fromlist=[name])
+  File "/Users/davidbakke/CascadeProjects/queue-beats/backend/app/apis/__init__.py", line 4, in <module>
+    from . import spotify_auth
+  File "/Users/davidbakke/CascadeProjects/queue-beats/backend/app/apis/spotify_auth/__init__.py", line 3, in <module>
+    import requests
+ModuleNotFoundError: No module named 'requests'
+Traceback (most recent call last):
+  File "/Users/davidbakke/CascadeProjects/queue-beats/backend/main.py", line 105, in import_api_routers
+    api_module = __import__(api_module_prefix + name, fromlist=[name])
+  File "/Users/davidbakke/CascadeProjects/queue-beats/backend/app/apis/__init__.py", line 4, in <module>
+    from . import spotify_auth
+  File "/Users/davidbakke/CascadeProjects/queue-beats/backend/app/apis/spotify_auth/__init__.py", line 3, in <module>
+    import requests
+ModuleNotFoundError: No module named 'requests'
+Traceback (most recent call last):
+  File "/Users/davidbakke/CascadeProjects/queue-beats/backend/main.py", line 105, in import_api_routers
+    api_module = __import__(api_module_prefix + name, fromlist=[name])
+  File "/Users/davidbakke/CascadeProjects/queue-beats/backend/app/apis/__init__.py", line 4, in <module>
+    from . import spotify_auth
+  File "/Users/davidbakke/CascadeProjects/queue-beats/backend/app/apis/spotify_auth/__init__.py", line 3, in <module>
+    import requests
+ModuleNotFoundError: No module named 'requests'
+Traceback (most recent call last):
+  File "/Users/davidbakke/CascadeProjects/queue-beats/backend/main.py", line 105, in import_api_routers
+    api_module = __import__(api_module_prefix + name, fromlist=[name])
+  File "/Users/davidbakke/CascadeProjects/queue-beats/backend/app/apis/__init__.py", line 4, in <module>
+    from . import spotify_auth
+  File "/Users/davidbakke/CascadeProjects/queue-beats/backend/app/apis/spotify_auth/__init__.py", line 3, in <module>
+    import requests
+ModuleNotFoundError: No module named 'requests'
+Traceback (most recent call last):
+  File "/Users/davidbakke/CascadeProjects/queue-beats/backend/main.py", line 105, in import_api_routers
+    api_module = __import__(api_module_prefix + name, fromlist=[name])
+  File "/Users/davidbakke/CascadeProjects/queue-beats/backend/app/apis/__init__.py", line 4, in <module>
+    from . import spotify_auth
+  File "/Users/davidbakke/CascadeProjects/queue-beats/backend/app/apis/spotify_auth/__init__.py", line 3, in <module>
+    import requests
+ModuleNotFoundError: No module named 'requests'
+Traceback (most recent call last):
+  File "/Users/davidbakke/CascadeProjects/queue-beats/backend/main.py", line 105, in import_api_routers
+    api_module = __import__(api_module_prefix + name, fromlist=[name])
+  File "/Users/davidbakke/CascadeProjects/queue-beats/backend/app/apis/__init__.py", line 4, in <module>
+    from . import spotify_auth
+  File "/Users/davidbakke/CascadeProjects/queue-beats/backend/app/apis/spotify_auth/__init__.py", line 3, in <module>
+    import requests
+ModuleNotFoundError: No module named 'requests'
+Traceback (most recent call last):
+  File "/Users/davidbakke/CascadeProjects/queue-beats/backend/main.py", line 105, in import_api_routers
+    api_module = __import__(api_module_prefix + name, fromlist=[name])
+  File "/Users/davidbakke/CascadeProjects/queue-beats/backend/app/apis/__init__.py", line 4, in <module>
+    from . import spotify_auth
+  File "/Users/davidbakke/CascadeProjects/queue-beats/backend/app/apis/spotify_auth/__init__.py", line 3, in <module>
+    import requests
+ModuleNotFoundError: No module named 'requests'
+Traceback (most recent call last):
+  File "/Users/davidbakke/CascadeProjects/queue-beats/backend/main.py", line 105, in import_api_routers
+    api_module = __import__(api_module_prefix + name, fromlist=[name])
+  File "/Users/davidbakke/CascadeProjects/queue-beats/backend/app/apis/__init__.py", line 4, in <module>
+    from . import spotify_auth
+  File "/Users/davidbakke/CascadeProjects/queue-beats/backend/app/apis/spotify_auth/__init__.py", line 3, in <module>
+    import requests
+ModuleNotFoundError: No module named 'requests'
+INFO:     Started server process [4343]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+Error handling module not found, using default error handling
+
+=== REGISTERING API ROUTERS ===
+Importing API: songs
+Error importing API songs: No module named 'requests'
+Importing API: setup
+Error importing API setup: No module named 'requests'
+Importing API: supabase_config2
+Error importing API supabase_config2: No module named 'requests'
+Importing API: utils
+Error importing API utils: No module named 'requests'
+Importing API: supabase
+Error importing API supabase: No module named 'requests'
+Importing API: spotify_search
+Error importing API spotify_search: No module named 'requests'
+Importing API: api_utils
+Error importing API api_utils: No module named 'requests'
+Importing API: supabase_config
+Error importing API supabase_config: No module named 'requests'
+Importing API: supabase2
+Error importing API supabase2: No module named 'requests'
+Importing API: spotify_auth
+Error importing API spotify_auth: No module named 'requests'
+Importing API: supabase_shared
+Error importing API supabase_shared: No module named 'requests'
+Importing API: debug
+Error importing API debug: No module named 'requests'
+
+=== ALL REGISTERED API ROUTES ===
+===============================
+
+GET /openapi.json
+HEAD /openapi.json
+GET /docs
+HEAD /docs
+GET /docs/oauth2-redirect
+HEAD /docs/oauth2-redirect
+GET /redoc
+HEAD /redoc
+GET /debug/health
+GET /debug/supabase
+INFO:     127.0.0.1:62919 - "OPTIONS /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62919 - "OPTIONS /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62925 - "OPTIONS /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62919 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62925 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62925 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62925 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62919 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62919 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62925 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62925 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62926 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62919 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62927 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63035 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62911 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62911 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62915 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62915 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62911 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62911 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62915 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62915 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62911 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63167 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63168 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64080 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64080 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64080 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64082 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64143 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64143 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64143 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64143 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64145 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64145 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64143 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64143 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64145 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64199 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64199 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64199 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64199 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64201 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64201 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64199 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64199 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64202 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64201 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64203 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51584 - "OPTIONS /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51584 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51584 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51584 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51584 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51586 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51586 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51584 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51584 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51590 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51586 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51591 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52002 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52002 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52002 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52004 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52034 - "OPTIONS /debug/supabase HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52036 - "OPTIONS /debug/supabase HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52036 - "GET /debug/supabase HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52034 - "GET /debug/supabase HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52034 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52037 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52039 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52095 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52095 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52095 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52095 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52097 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52097 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52095 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52095 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52100 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52097 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52101 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53200 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53251 - "GET /debug/supabase HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53313 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53313 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53313 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53313 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53315 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53315 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53313 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53313 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53321 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53315 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53322 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53419 - "GET /debug/supabase-check HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:53783 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53783 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53783 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53783 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53785 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53785 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53783 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53783 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53785 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53786 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53787 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53785 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53783 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53783 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53785 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53785 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53783 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53783 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53808 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53785 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53809 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53785 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53785 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53783 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53783 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53785 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53785 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53783 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53783 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53827 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53785 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53828 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53924 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53924 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53924 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53926 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53926 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53926 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53924 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53924 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53926 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53926 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53924 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53924 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53926 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53926 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53926 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53924 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53924 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53926 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53926 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53924 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53924 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53926 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53926 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53926 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53924 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53924 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53926 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53926 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53924 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53924 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53926 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54040 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54040 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54040 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54040 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54042 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54042 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54040 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54040 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54043 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54042 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54044 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56140 - "OPTIONS /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56142 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56142 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56142 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56142 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56144 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56144 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56142 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56142 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56150 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56144 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56151 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56144 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56142 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56142 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56144 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56196 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56196 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56196 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56198 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56198 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56196 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56196 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56198 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56198 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56196 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56196 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56198 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56198 - "OPTIONS /routes/spotify_search/spotify/search?query=adele&limit=10 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56198 - "GET /routes/spotify_search/spotify/search?query=adele&limit=10 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:56198 - "GET /routes/spotify_search/spotify/search?query=adele&limit=10 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57437 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57437 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57439 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57437 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57437 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57439 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57439 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57437 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57437 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57437 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57439 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57439 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57437 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57437 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57439 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57439 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57437 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57437 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57437 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57439 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57439 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57437 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57437 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57439 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57439 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57497 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57437 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57498 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57437 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57439 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57437 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57439 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57439 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57439 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57437 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57437 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57439 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57439 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57437 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57437 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57439 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57551 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57551 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57551 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57551 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57553 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57553 - "OPTIONS /apis/spotify_auth/token HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57551 - "OPTIONS /apis/spotify_auth/token HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57551 - "POST /apis/spotify_auth/token HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57555 - "POST /apis/spotify_auth/token HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:59964 - "OPTIONS /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59964 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59964 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59964 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59964 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59966 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59966 - "POST /apis/spotify_auth/token HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:59964 - "POST /apis/spotify_auth/token HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:60021 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60021 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60021 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60021 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60023 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60023 - "POST /apis/spotify_auth/token HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:60021 - "POST /apis/spotify_auth/token HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:60021 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60021 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60023 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60023 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60021 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60021 - "POST /apis/spotify_auth/token HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:60023 - "POST /apis/spotify_auth/token HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:60023 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60021 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60021 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60023 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60136 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60136 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60136 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60136 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60138 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60138 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60136 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60136 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60138 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60213 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60213 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60213 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60215 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60216 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60217 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60215 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60213 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60213 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60215 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60215 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60213 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60215 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60241 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60213 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60243 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60213 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60215 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60215 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60213 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60213 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60215 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60215 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60265 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60213 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60267 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60213 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60215 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60215 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60213 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60213 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60215 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60215 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60213 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60366 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60366 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60366 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60368 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60368 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60366 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60366 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60368 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60368 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60366 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60366 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60368 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60368 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60366 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60366 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60368 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60368 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60366 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60366 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60368 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60492 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60492 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60492 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60495 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60661 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60661 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60663 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60663 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60661 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60661 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60663 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60663 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60661 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60661 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60663 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60663 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60661 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60661 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60663 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60663 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60661 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60661 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60663 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60663 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60661 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60752 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60752 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60755 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60752 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60798 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60798 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60798 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60801 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60801 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60798 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60798 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60801 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60801 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60801 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60798 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60798 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60801 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60801 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60798 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60798 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60801 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60801 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60798 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60798 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60801 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60801 - "OPTIONS /routes/spotify_search/spotify/search?query=adele&limit=10 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60801 - "GET /routes/spotify_search/spotify/search?query=adele&limit=10 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:62431 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62431 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62434 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62434 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62431 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62431 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62434 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62434 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62431 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53286 - "OPTIONS /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53286 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53288 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53286 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53286 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53288 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53288 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53286 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53286 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53288 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53320 - "OPTIONS /routes/spotify_search/spotify/search?query=adele&limit=10 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53320 - "GET /routes/spotify_search/spotify/search?query=adele&limit=10 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:53320 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53320 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53320 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53343 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53344 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53345 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53343 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53320 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53320 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53343 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53410 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53410 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53410 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53412 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53462 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53465 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53462 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53465 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53465 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53462 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53462 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53471 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53465 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53473 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53465 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53465 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53462 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53462 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53465 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53465 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53462 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53462 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53489 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53465 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53490 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55941 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55941 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55941 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55941 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55943 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55943 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55941 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55941 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55947 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55943 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55948 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55943 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55941 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55943 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55941 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58518 - "OPTIONS /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58518 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58518 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58518 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58518 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58520 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58520 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58518 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58518 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58520 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61148 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61148 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61148 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61148 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61150 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61150 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61148 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61148 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61150 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62890 - "OPTIONS /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62893 - "OPTIONS /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62890 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62894 - "OPTIONS /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62890 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62896 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62896 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62890 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62890 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62896 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62896 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62890 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65360 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65360 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65360 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65360 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65362 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65362 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65360 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65360 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65362 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56961 - "OPTIONS /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56963 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56963 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56963 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56963 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56970 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56970 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56963 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56963 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56970 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57007 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57007 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57007 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57009 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57009 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57007 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57007 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57009 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57009 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57007 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57009 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57007 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57007 - "OPTIONS /routes/spotify_search/spotify/search?query=adele&limit=10 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57009 - "GET /routes/spotify_search/spotify/search?query=adele&limit=10 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57607 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57607 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57609 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57609 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57607 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57607 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57609 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57607 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57609 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57731 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57731 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57731 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57731 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57734 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57734 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57731 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57731 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57734 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58210 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58210 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58210 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58210 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58214 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58214 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58210 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58210 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58214 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58750 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58750 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58750 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58750 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58752 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58752 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58750 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58752 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58750 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58750 - "GET /routes/spotify_search/spotify/search?query=adele&limit=10 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:52041 - "OPTIONS /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52041 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52041 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52041 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52041 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52051 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52051 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52041 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52041 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52051 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52051 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52051 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52041 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52041 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52051 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52051 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52041 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52041 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52051 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52090 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52091 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52051 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52041 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52041 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52051 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52051 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52041 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52041 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52051 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52051 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52041 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52041 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52051 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52051 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52041 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52041 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52051 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52051 - "OPTIONS /routes/spotify_search/spotify/search?query=adele&limit=10 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52051 - "GET /routes/spotify_search/spotify/search?query=adele&limit=10 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:52051 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52041 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52041 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52041 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52041 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52041 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52051 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52051 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52041 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52041 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52051 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52051 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52041 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52240 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52240 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52240 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52242 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52242 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52240 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52240 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52242 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52242 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52240 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52240 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52242 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52242 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52240 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52240 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52240 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52240 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52242 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52242 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52240 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52240 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52242 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52242 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52240 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52240 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52242 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52242 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52306 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52240 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52307 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52240 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52242 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52242 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52240 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52240 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52242 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52242 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52240 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52240 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52242 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52242 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52240 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52240 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52242 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52242 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52240 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52240 - "GET /routes/spotify_search/spotify/search?query=adele&limit=10 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:53229 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53229 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53229 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53229 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53243 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53243 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53229 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53229 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53247 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53243 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53248 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55691 - "OPTIONS /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55691 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55691 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55691 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55691 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55700 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55700 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55691 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55691 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55700 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55700 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55700 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55691 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55691 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55700 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55700 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55691 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55691 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55700 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55761 - "OPTIONS /routes/spotify_search/spotify/search?query=adele&limit=10 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55761 - "GET /routes/spotify_search/spotify/search?query=adele&limit=10 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:56438 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56438 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56438 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56438 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56448 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56448 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56438 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56438 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56448 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56448 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56438 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56438 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56448 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56448 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56438 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56438 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56448 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56511 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56511 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56511 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56514 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56513 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56515 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56513 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56511 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56511 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56513 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57269 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57269 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57269 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57269 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57283 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57283 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57269 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57269 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57283 - "GET /debug/health HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [4343]
+INFO:     Stopping reloader process [4325]

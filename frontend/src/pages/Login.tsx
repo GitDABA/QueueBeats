@@ -27,25 +27,52 @@ function LoginContent() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [detailedError, setDetailedError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    setDetailedError(null);
     setLoading(true);
     
+    console.log('Login attempt started for email:', email);
+    
+    // Create a timeout to prevent the loading state from being stuck
+    const timeout = setTimeout(() => {
+      console.log('Login operation timed out - resetting loading state');
+      setLoading(false);
+      setError('Login timed out after 15 seconds. Please try again.');
+      setDetailedError('The login process took too long to complete. This could be due to network issues, database connection problems, or server load.');
+    }, 15000); // 15 second timeout
+    
     try {
+      console.log('Calling signIn method...');
+      const startTime = Date.now();
       const { error } = await signIn(email, password);
+      const duration = Date.now() - startTime;
+      console.log(`SignIn method completed in ${duration}ms`);
+      
+      // Clear the timeout since the operation completed
+      clearTimeout(timeout);
       
       if (error) {
+        console.error('SignIn returned an error:', error);
         setError(error.message || "Failed to sign in");
+        setDetailedError(`Error code: ${error.code || 'unknown'}\nDetails: ${JSON.stringify(error, null, 2)}`);
+        setLoading(false);
         return;
       }
       
+      console.log('Login successful, redirecting to dashboard');
       // Redirect to dashboard on success
       navigate("/dashboard");
     } catch (err: any) {
+      // Clear the timeout since the operation completed
+      clearTimeout(timeout);
+      
+      console.error('Login exception caught:', err);
       setError(err.message || "An unexpected error occurred");
-    } finally {
+      setDetailedError(`Error stack: ${err.stack || 'No stack trace available'}`);
       setLoading(false);
     }
   };
@@ -72,7 +99,15 @@ function LoginContent() {
         <div className="bg-black/30 backdrop-blur-sm p-8 rounded-xl border border-white/10 shadow-xl">
           {error && (
             <div className="mb-4 p-3 bg-red-500/10 border border-red-500/30 text-red-500 rounded-lg text-sm">
-              {error}
+              <p className="font-medium">{error}</p>
+              {detailedError && (
+                <details className="mt-2 text-xs text-red-400/80">
+                  <summary className="cursor-pointer">Technical Details</summary>
+                  <pre className="mt-2 p-2 bg-black/50 rounded overflow-x-auto whitespace-pre-wrap">
+                    {detailedError}
+                  </pre>
+                </details>
+              )}
             </div>
           )}
           
@@ -88,6 +123,7 @@ function LoginContent() {
                   className="w-full px-3 py-2 bg-black/50 border border-white/10 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   placeholder="you@example.com"
                   required
+                  disabled={loading}
                 />
               </div>
               
@@ -106,6 +142,7 @@ function LoginContent() {
                   className="w-full px-3 py-2 bg-black/50 border border-white/10 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   placeholder="••••••••"
                   required
+                  disabled={loading}
                 />
               </div>
               

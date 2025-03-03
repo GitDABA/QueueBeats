@@ -1,26 +1,41 @@
+"""
+QueueBeats Backend FastAPI Application
+
+This is the main entry point for the QueueBeats backend API server.
+The server is built using FastAPI and provides endpoints for:
+- Music queue management
+- Spotify integration
+- User authentication via Supabase
+- Real-time updates
+
+Configuration:
+- Server runs on port 8001 by default (configurable via BACKEND_PORT in .env)
+- API routes are dynamically loaded from the app/apis directory
+- CORS is enabled for development
+- Authentication can be disabled per-router via routers.json
+
+API Path Structure:
+- Direct endpoints: /debug/health, /debug/supabase - defined in create_app()
+- Router endpoints: /routes/{module}/{endpoint} - dynamically loaded from app/apis/
+  Example: /routes/debug/health from app/apis/debug/__init__.py
+
+To start the server:
+1. Activate the Python virtual environment (done by run.sh)
+2. Run: uvicorn main:app --reload --port 8001
+   (or simply use ./run.sh)
+"""
+
 import os
 import pathlib
 import json
 import dotenv
-from fastapi import FastAPI, APIRouter, Depends
+import sys
+from fastapi import FastAPI, APIRouter, Depends, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware.base import BaseHTTPMiddleware
 
 # Load environment variables
 dotenv.load_dotenv()
-
-# Create mock for databutton if not available
-class MockDatabutton:
-    class Secrets:
-        def get(self, key):
-            return os.environ.get(key)
-    
-    secrets = Secrets()
-
-try:
-    import databutton as db
-except ImportError:
-    print("Databutton not available, using mock")
-    db = MockDatabutton()
 
 # Create mock auth middleware
 class AuthConfig:
@@ -79,41 +94,68 @@ def import_api_routers() -> APIRouter:
 
     api_module_prefix = "app.apis."
 
+    # Create a special router for Spotify auth that maps to the expected frontend paths
+    spotify_router = APIRouter(prefix="/spotify")
+    
+    print("\n=== REGISTERING API ROUTERS ===")
     for name in api_names:
         print(f"Importing API: {name}")
         try:
+            # Import the module
             api_module = __import__(api_module_prefix + name, fromlist=[name])
             api_router = getattr(api_module, "router", None)
+            
             if isinstance(api_router, APIRouter):
-                routes.include_router(
-                    api_router,
-                    dependencies=(
-                        []
-                        if is_auth_disabled(router_config, name)
-                        else [Depends(get_authorized_user)]
-                    ),
-                )
+                # Log all the routes in this router
+                for route in api_router.routes:
+                    methods = getattr(route, "methods", ["GET"])
+                    path = getattr(route, "path", "unknown")
+                    print(f"  - Found route: {', '.join(methods)} {path}")
+                
+                # Special case for spotify_auth to map to /routes/spotify/...
+                if name == "spotify_auth":
+                    # Include the spotify_auth router directly in the spotify_router
+                    spotify_router.include_router(
+                        api_router,
+                        dependencies=(
+                            []
+                            if is_auth_disabled(router_config, name)
+                            else [Depends(get_authorized_user)]
+                        ),
+                    )
+                    print(f"  > Included in spotify_router: {name}")
+                else:
+                    # Regular case for other routers
+                    routes.include_router(
+                        api_router,
+                        prefix=f"/{name}",
+                        dependencies=(
+                            []
+                            if is_auth_disabled(router_config, name)
+                            else [Depends(get_authorized_user)]
+                        ),
+                    )
+                    print(f"  > Registered at /routes/{name}: {len(api_router.routes)} endpoints")
+            else:
+                print(f"  ! Warning: No router found in module {name}")
         except Exception as e:
-            print(f"Error importing API {name}: {e}")
+            import traceback
+            print(f"Error importing API {name}: {str(e)}")
+            traceback.print_exc()
             continue
-
-    print(routes.routes)
+    
+    # Include the spotify_router in the main routes
+    routes.include_router(spotify_router)
+    
+    # Log all configured routes
+    print("\n=== ALL REGISTERED API ROUTES ===")
+    for route in routes.routes:
+        methods = getattr(route, "methods", ["GET"])
+        path = getattr(route, "path", "unknown")
+        print(f"  {', '.join(methods)} {routes.prefix}{path}")
+    print("===============================\n")
 
     return routes
-
-
-def get_firebase_config() -> dict | None:
-    extensions = os.environ.get("DATABUTTON_EXTENSIONS", "[]")
-    try:
-        extensions = json.loads(extensions)
-
-        for ext in extensions:
-            if ext["name"] == "firebase-auth":
-                return ext["config"]["firebaseConfig"]
-    except:
-        pass
-
-    return None
 
 
 def create_app() -> FastAPI:
@@ -127,29 +169,53 @@ def create_app() -> FastAPI:
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
+        expose_headers=["Content-Type", "Content-Length", "Access-Control-Allow-Origin", "Access-Control-Allow-Headers"],
     )
     
+    # Content type middleware to ensure proper content type headers
+    class ContentTypeMiddleware(BaseHTTPMiddleware):
+        async def dispatch(self, request: Request, call_next):
+            response = await call_next(request)
+            
+            # If response doesn't have a content-type header, set it to application/json
+            if "content-type" not in response.headers and request.headers.get("accept") == "application/json":
+                response.headers["content-type"] = "application/json"
+                
+            return response
+
+    # Add content type middleware
+    app.add_middleware(ContentTypeMiddleware)
+    
+    # Setup enhanced error handling
+    try:
+        from app.utils.error_handling import setup_error_handlers
+        setup_error_handlers(app)
+        print("Enhanced error handling enabled")
+    except ImportError:
+        print("Error handling module not found, using default error handling")
+    
+    # Add health check endpoint
+    @app.get("/debug/health")
+    async def health_check():
+        return {"status": "healthy", "message": "API is running", "port": os.environ.get("BACKEND_PORT", "8001")}
+    
+    @app.get("/debug/supabase")
+    async def supabase_debug():
+        return {"status": "debug", "connection": "supabase debug info"}
+    
     app.include_router(import_api_routers())
+
+    # Middleware to add default headers to all responses
+    @app.middleware("http")
+    async def add_default_headers(request: Request, call_next):
+        response = await call_next(request)
+        response.headers["X-Content-Type-Options"] = "nosniff"
+        return response
 
     for route in app.routes:
         if hasattr(route, "methods"):
             for method in route.methods:
                 print(f"{method} {route.path}")
-
-    firebase_config = get_firebase_config()
-
-    if firebase_config is None:
-        print("No firebase config found")
-        app.state.auth_config = None
-    else:
-        print("Firebase config found")
-        auth_config = {
-            "jwks_url": "https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com",
-            "audience": firebase_config["projectId"],
-            "header": "authorization",
-        }
-
-        app.state.auth_config = AuthConfig(**auth_config)
 
     return app
 

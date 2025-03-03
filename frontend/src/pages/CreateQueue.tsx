@@ -7,13 +7,16 @@ import { ProtectedRoute } from "../components/ProtectedRoute";
 import { Navigation } from "../components/Navigation";
 import { useAuth } from "../utils/auth";
 import { createQueue, QueueSettings } from "../utils/queueHelpers";
+import MainLayout from "../components/MainLayout";
 
 export default function CreateQueue() {
   return (
     <AuthInit>
       <AuthProvider>
         <ProtectedRoute>
-          <CreateQueueContent />
+          <MainLayout>
+            <CreateQueueContent />
+          </MainLayout>
         </ProtectedRoute>
       </AuthProvider>
     </AuthInit>
@@ -90,9 +93,7 @@ function CreateQueueContent() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Navigation />
-
-      <main className="container mx-auto px-4 py-12">
+      <main className="container mx-auto px-4 py-8">
         <div className="max-w-3xl mx-auto">
           <div className="mb-8">
             <h1 className="text-3xl font-bold mb-2">Create a Music Queue</h1>

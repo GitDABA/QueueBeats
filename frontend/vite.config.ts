@@ -1,3 +1,18 @@
+/**
+ * QueueBeats Frontend Vite Configuration
+ * 
+ * This file configures the Vite build tool for the QueueBeats frontend application.
+ * Key configurations:
+ * - Environment variables handling and defaults
+ * - Server port configuration (default: 5173, configurable via FRONTEND_PORT)
+ * - API proxy settings to route API requests to the backend server
+ * - Build optimization settings
+ * - Plugin configuration
+ * 
+ * The configuration automatically detects if running in Netlify environment
+ * and adjusts settings accordingly.
+ */
+
 import react from "@vitejs/plugin-react";
 import "dotenv/config";
 import path from "node:path";
@@ -49,28 +64,23 @@ const buildVariables = () => {
 		(isNetlify ? '' : 'http://localhost:8001');
 	
 	const wsApiUrl = process.env.VITE_WS_API_URL || 
-		(isNetlify ? (apiUrl.replace('https://', 'wss://').replace('http://', 'ws://')) : 'ws://localhost:8001');
+		(isNetlify ? '' : 'ws://localhost:8001');
 
-	const defines: Record<string, string> = {
-		__APP_ID__: JSON.stringify(appId),
-		__API_PATH__: JSON.stringify(isNetlify ? "/api" : ""),
-		__API_URL__: JSON.stringify(apiUrl),
-		__WS_API_URL__: JSON.stringify(wsApiUrl),
-		__APP_BASE_PATH__: JSON.stringify("/"),
-		__APP_TITLE__: JSON.stringify("QueueBeats"),
-		__APP_FAVICON_LIGHT__: JSON.stringify("/favicon-light.svg"),
-		__APP_FAVICON_DARK__: JSON.stringify("/favicon-dark.svg"),
-		__APP_DEPLOY_USERNAME__: JSON.stringify(""),
-		__APP_DEPLOY_APPNAME__: JSON.stringify(""),
-		__APP_DEPLOY_CUSTOM_DOMAIN__: JSON.stringify(""),
-		__FIREBASE_CONFIG__: JSON.stringify(
-			getExtensionConfig(ExtensionName.FIREBASE_AUTH),
-		),
-		__SUPABASE_URL__: JSON.stringify(process.env.VITE_SUPABASE_URL || ''),
-		__SUPABASE_ANON_KEY__: JSON.stringify(process.env.VITE_SUPABASE_ANON_KEY || ''),
+	const supabaseUrl = process.env.VITE_SUPABASE_URL || '';
+	const supabaseKey = process.env.VITE_SUPABASE_ANON_KEY || '';
+
+	return {
+		...(appId && { "import.meta.env.VITE_APP_ID": JSON.stringify(appId) }),
+		"import.meta.env.VITE_API_URL": JSON.stringify(apiUrl),
+		"import.meta.env.VITE_WS_API_URL": JSON.stringify(wsApiUrl),
+		"import.meta.env.VITE_SUPABASE_URL": JSON.stringify(supabaseUrl),
+		"import.meta.env.VITE_SUPABASE_ANON_KEY": JSON.stringify(supabaseKey),
+		...(extensions.some((it) => it.name === ExtensionName.FIREBASE_AUTH) && {
+			"import.meta.env.VITE_FIREBASE_AUTH_CONFIG": getExtensionConfig(
+				ExtensionName.FIREBASE_AUTH
+			),
+		}),
 	};
-
-	return defines;
 };
 
 // Get the backend port from environment variable or use the default
@@ -78,60 +88,81 @@ const backendPort = process.env.BACKEND_PORT || '8001';
 // Get the frontend port from environment variable or use the default
 const frontendPort = parseInt(process.env.FRONTEND_PORT || '5173', 10);
 
-// https://vite.dev/config/
+// https://vitejs.dev/config/
 export default defineConfig({
-	define: buildVariables(),
-	plugins: [react(), splitVendorChunkPlugin(), tsConfigPaths(), injectHTML()],
-	server: {
-		port: frontendPort,
-		proxy: {
-			"/routes": {
-				target: `http://127.0.0.1:${backendPort}`,
-				changeOrigin: true,
-				rewrite: (path) => path,
-			},
-			"/api": {
-				target: `http://127.0.0.1:${backendPort}`, 
-				changeOrigin: true,
-				rewrite: (path) => path.replace(/^\/api/, '/routes'),
-			},
-			// Handle any Supabase direct access
-			"/supabase": {
-				target: `http://127.0.0.1:${backendPort}`,
-				changeOrigin: true,
-			},
-			"/supabase-config": {
-				target: `http://127.0.0.1:${backendPort}`,
-				changeOrigin: true,
-			}
-		},
-		fs: {
-			// Allow Vite to resolve imports from these directories
-			allow: ['..']
-		},
+	plugins: [tsConfigPaths(), react(), splitVendorChunkPlugin(), injectHTML()],
+	define: {
+		...buildVariables(),
 	},
 	resolve: {
 		alias: {
-			"@": path.resolve(__dirname, "./src"),
+			'@': path.resolve(__dirname, './src'),
 		},
-		extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json']
+		dedupe: ['react', 'react-dom'],
 	},
 	optimizeDeps: {
-		include: ['react', 'react-dom', 'react-router-dom'],
-		exclude: []
+		include: [
+			'react', 
+			'react-dom', 
+			'react-router-dom',
+			'@supabase/supabase-js',
+		],
+		esbuildOptions: {
+			target: 'es2020',
+		},
 	},
 	build: {
-		outDir: 'dist',
+		target: 'es2020',
+		outDir: "build",
 		sourcemap: true,
+		commonjsOptions: {
+			transformMixedEsModules: true,
+		},
 		rollupOptions: {
-			// Externalize deps that shouldn't be bundled
 			output: {
-				// Ensure proper chunking
 				manualChunks: {
-					'vendor': ['react', 'react-dom', 'react-router-dom'],
-					'pages': ['./src/pages/index.ts'],
+					'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+					'supabase-vendor': ['@supabase/supabase-js'],
+				},
+			},
+		},
+	},
+	server: {
+		port: frontendPort,
+		strictPort: true,
+		proxy: {
+			// Main API paths - direct endpoints
+			"/debug": {
+				target: `http://127.0.0.1:${backendPort}`,
+				changeOrigin: true,
+			},
+			// Routed API paths (from app/apis/*)
+			"/routes": {
+				target: `http://127.0.0.1:${backendPort}`,
+				changeOrigin: true,
+			},
+			// Legacy API path support
+			"/api": {
+				target: `http://127.0.0.1:${backendPort}`, 
+				changeOrigin: true,
+				rewrite(path) {
+					return path.replace(/^\/api/, "");
 				}
+			},
+			// Netlify Functions
+			"/.netlify/functions/database-health-check": {
+				target: "http://localhost:8888",
+				changeOrigin: true,
+			},
+			"/.netlify/functions/spotify-search": {
+				target: "http://localhost:8888",
+				changeOrigin: true,
+			},
+			// Spotify API proxy
+			"/spotify": {
+				target: "http://localhost:8888",
+				changeOrigin: true,
 			}
-		}
-	}
+		},
+	},
 });

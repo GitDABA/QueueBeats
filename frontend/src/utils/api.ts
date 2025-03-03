@@ -3,6 +3,7 @@ import { API_PATH } from './constants';
 
 // Determine if we're in a deployed environment vs local development
 const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+const isDevelopment = process.env.NODE_ENV === 'development';
 
 // We'll store the API base URL once we've determined it
 let cachedApiUrl: string | null = null;
@@ -13,15 +14,18 @@ export const getApiUrl = () => {
   if (cachedApiUrl) return cachedApiUrl;
   
   if (isLocalhost) {
-    // In local development, use the standard origin + API_PATH
-    cachedApiUrl = `${window.location.origin}${API_PATH}`;
+    // In local development, use Netlify dev server when available
+    if (isDevelopment && import.meta.env.VITE_API_URL) {
+      cachedApiUrl = import.meta.env.VITE_API_URL;
+    } else {
+      // Fallback to standard origin + API_PATH
+      cachedApiUrl = `${window.location.origin}${API_PATH}`;
+    }
     console.log('Local development API URL:', cachedApiUrl);
     return cachedApiUrl;
   } else {
-    // For Databutton deployed apps, the correct format is:
-    // https://[app-name].databutton.app/api
+    // For deployed apps
     cachedApiUrl = `${window.location.origin}/api`;
-    // For debugging - helps identify issues with API path construction
     console.log('Production API access details:', {
       origin: window.location.origin,
       apiPath: '/api',
@@ -30,6 +34,63 @@ export const getApiUrl = () => {
     });
     console.log('Production API URL:', cachedApiUrl);
     return cachedApiUrl;
+  }
+};
+
+// Function to get appropriate endpoint URL based on environment
+export const getEndpointUrl = (endpoint: string) => {
+  const baseUrl = getApiUrl();
+  
+  if (endpoint.startsWith('/.netlify/functions/')) {
+    return `${baseUrl}${endpoint}`;
+  }
+  
+  if (endpoint.startsWith('/routes/')) {
+    if (isDevelopment && import.meta.env.VITE_USE_NETLIFY_FUNCTIONS === 'true') {
+      // Map to Netlify Functions when enabled
+      const parts = endpoint.split('/');
+      const functionName = parts[parts.length - 1];
+      return `${baseUrl}/.netlify/functions/${functionName}`;
+    }
+  }
+  
+  return `${baseUrl}${endpoint}`;
+};
+
+// Generic fetch wrapper with error handling
+export const fetchApi = async (endpoint: string, options: RequestInit = {}) => {
+  const url = getEndpointUrl(endpoint);
+  
+  try {
+    const response = await fetch(url, {
+      ...options,
+      headers: {
+        'Content-Type': 'application/json',
+        ...options.headers,
+      },
+    });
+    
+    if (!response.ok) {
+      const errorText = await response.text();
+      let errorDetail;
+      try {
+        errorDetail = JSON.parse(errorText);
+      } catch (e) {
+        errorDetail = errorText;
+      }
+      
+      throw {
+        status: response.status,
+        statusText: response.statusText,
+        url: response.url,
+        detail: errorDetail
+      };
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error(`API request failed for ${url}:`, error);
+    throw error;
   }
 };
 

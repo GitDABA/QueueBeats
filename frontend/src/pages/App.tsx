@@ -59,12 +59,8 @@ function HomePage() {
       
       // Try multiple endpoints to find one that works
       const endpoints = [
-        `${originPrefix}/api/debug/health`,
-        `${originPrefix}/debug/health`,
-        `${originPrefix}/api/supabase-config`,
-        `${originPrefix}/api/supabase-config/client`,
-        `${originPrefix}/supabase-config`,
-        `${originPrefix}/supabase-config/client`
+        `${originPrefix}/debug/health`,  // Use the endpoint we've added
+        `${originPrefix}/debug/supabase` // Use the endpoint we've added
       ];
       
       for (const endpoint of endpoints) {
@@ -91,7 +87,7 @@ function HomePage() {
       // If we got here, all direct fetch attempts failed - try no-cors mode to check if API is accessible
       try {
         console.log('Attempting no-cors connection');
-        const noCorsResponse = await fetch('/api/debug/health', { 
+        const noCorsResponse = await fetch('/debug/health', { 
           mode: 'no-cors',
           method: 'GET',
           credentials: 'include'

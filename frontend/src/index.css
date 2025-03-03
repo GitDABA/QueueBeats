@@ -101,6 +101,53 @@
   animation: beatPulse 2s infinite ease-in-out;
 }
 
+/* Layout styles to prevent sidebar overlap */
+.main-content {
+  @apply w-full transition-all duration-300 pt-4;
+  padding-left: 0;
+}
+
+/* On large screens, add left margin to account for sidebar */
+@media (min-width: 1024px) {
+  .main-content {
+    @apply ml-64; /* This matches the w-64 width of the sidebar */
+    padding-left: 1rem;
+    padding-right: 1rem;
+    width: calc(100% - 256px); /* 256px is the sidebar width (w-64) */
+    max-width: 1400px; /* Prevent content from getting too wide on very large screens */
+    margin-right: auto;
+  }
+}
+
+/* For extra large screens, center the content between navbar and right edge */
+@media (min-width: 1600px) {
+  .main-content {
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    transform: translateX(128px); /* Half the sidebar width to account for centering */
+  }
+}
+
+/* For mobile when sidebar is shown */
+.sidebar-open .main-content {
+  @apply ml-64; /* Push content when sidebar is visible on mobile */
+}
+
+/* Custom responsive adjustments - ensure content is properly centered */
+@media (min-width: 1200px) {
+  .main-content > div {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* Content padding to ensure consistent spacing */
+.content-container {
+  @apply px-4 py-8 container mx-auto;
+}
+
 /* Glowing effect for buttons */
 .glow-effect {
   position: relative;

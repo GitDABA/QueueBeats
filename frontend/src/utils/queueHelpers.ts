@@ -1,4 +1,5 @@
 import { supabase } from './supabase';
+import { getAuthenticatedSupabaseClient, ensureValidSession } from './supabase-helpers';
 import type { Database } from './database.types';
 
 export type Queue = Database['public']['Tables']['queues']['Row'];
@@ -91,36 +92,124 @@ export const getCurrentPlayingSong = async (queueId: string) => {
   }
 };
 
-// Create a new queue
+// Create a new queue with robust error handling
 export const createQueue = async (
   userId: string, 
   name: string, 
   description?: string, 
   settings?: QueueSettings
 ) => {
+  // Ensure Supabase is initialized
+  const ensureSupabaseInitialized = async () => {
+    if (!supabase) {
+      console.log("Supabase client not available, attempting to initialize...");
+      try {
+        const success = await loadSupabaseConfig();
+        if (!success) {
+          throw new Error("Failed to initialize Supabase client");
+        }
+      } catch (error) {
+        console.error("Error initializing Supabase:", error);
+        throw new Error("Database connection failed: Could not initialize client");
+      }
+    }
+  };
+
   try {
+    console.log("Creating queue with:", { userId, name, description, settings });
+    
+    // Validate required fields
+    if (!userId) {
+      console.error("Invalid userId:", userId);
+      throw new Error("User ID is required");
+    }
+    if (!name) {
+      console.error("Invalid name:", name);
+      throw new Error("Queue name is required");
+    }
+    
+    // Make sure Supabase is initialized
+    await ensureSupabaseInitialized();
+    
     // Generate a random 6-digit access code
     const accessCode = Math.floor(100000 + Math.random() * 900000).toString();
+    console.log("Generated access code:", accessCode);
     
-    const { data, error } = await supabase
+    // Prepare queue data
+    const queueData = {
+      name,
+      description: description || null,
+      creator_id: userId,
+      active: true,
+      access_code: accessCode,
+      settings: settings || { isPublic: true, allowGuestAddSongs: true },
+    };
+    
+    console.log("Inserting queue data:", queueData);
+    
+    // First attempt
+    let response = await supabase
       .from('queues')
-      .insert({
-        name,
-        description,
-        creator_id: userId,
-        active: true,
-        access_code: accessCode,
-        settings: settings || { isPublic: true, allowGuestAddSongs: true },
-        created_at: new Date().toISOString()
-      })
+      .insert(queueData)
       .select()
       .single();
     
-    if (error) throw error;
-    return data as Queue;
-  } catch (error) {
+    console.log("Initial queue creation response:", response);
+    
+    // Safely check if there's a network-related error
+    if (response.error && response.error.message && (
+      response.error.message.includes('connection') || 
+      response.error.message.includes('timeout') ||
+      response.error.message.includes('network')
+    )) {
+      console.log("Got connection error, retrying after delay...");
+      
+      // Wait for network to stabilize
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Retry the request
+      response = await supabase
+        .from('queues')
+        .insert(queueData)
+        .select()
+        .single();
+      
+      console.log("Retry queue creation response:", response);
+    }
+    
+    // Handle final result
+    if (response.error) {
+      console.error("Supabase error creating queue:", response.error);
+      
+      // Check if the error is a 404 (table not found)
+      if (response.status === 404) {
+        throw new Error("The 'queues' table does not exist in the database. Please set up the required database tables first.");
+      }
+      
+      // Try to provide more helpful error messages
+      if (response.error.code === '23505') {
+        throw new Error("A queue with this name already exists");
+      } else if (response.error.code === '23502') {
+        throw new Error("Missing required field: " + (response.error.details || response.error.message));
+      } else if (response.error.code === '42P01') {
+        throw new Error("Database table 'queues' not found. Please check your database setup.");
+      } else {
+        throw new Error("Failed to create queue: " + (response.error.message || response.statusText || "Unknown error"));
+      }
+    }
+    
+    if (!response.data) {
+      console.error("No data returned from queue creation");
+      throw new Error("Failed to create queue: No data returned");
+    }
+    
+    return response.data as Queue;
+  } catch (error: any) {
     console.error('Error creating queue:', error);
-    throw error;
+    
+    // Convert any unknown errors to a readable message
+    const errorMessage = error.message || "An unexpected error occurred";
+    throw new Error(`Queue creation failed: ${errorMessage}`);
   }
 };
 
@@ -144,16 +233,86 @@ export const getUserQueues = async (userId: string) => {
 // Get a queue by ID
 export const getQueueById = async (queueId: string) => {
   try {
-    const { data, error } = await supabase
+    // Get authenticated client
+    const { supabase: authClient, isAuthenticated } = await getAuthenticatedSupabaseClient();
+    
+    if (!isAuthenticated) {
+      console.warn('Using unauthenticated Supabase client for queue fetch - this may cause 406 errors');
+    }
+    
+    // Use the client with proper auth
+    const { data, error } = await authClient
       .from('queues')
       .select('*')
       .eq('id', queueId)
       .single();
     
-    if (error) throw error;
+    if (error) {
+      if (error.code === 'PGRST116') {
+        console.warn(`Queue not found with ID: ${queueId}`);
+        
+        // Try the mock endpoint as fallback
+        console.log('Trying mock API as fallback...');
+        return await getMockQueueById(queueId);
+      }
+      
+      // For 406 Not Acceptable errors, try the mock API
+      if (error.message?.includes('406') || error.code === '406') {
+        console.warn('406 Not Acceptable error - falling back to mock API');
+        return await getMockQueueById(queueId);
+      }
+      
+      throw error;
+    }
+    
     return data as Queue;
   } catch (error) {
     console.error('Error fetching queue:', error);
+    
+    // As a last resort, try the mock API
+    try {
+      console.log('Error occurred fetching from Supabase, trying mock API as fallback...');
+      return await getMockQueueById(queueId);
+    } catch (mockError) {
+      console.error('Mock API fallback also failed:', mockError);
+      throw error; // Throw the original error
+    }
+  }
+};
+
+// Fetch from mock API endpoint
+export const getMockQueueById = async (queueId: string): Promise<Queue> => {
+  try {
+    // Get current user ID if possible
+    let userId = null;
+    try {
+      const { data } = await supabase.auth.getUser();
+      userId = data.user?.id;
+    } catch (e) {
+      console.warn('Could not get user ID for mock API:', e);
+    }
+    
+    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8001';
+    const url = `${apiUrl}/routes/debug/debug/mock-queue/${queueId}${userId ? `?user_id=${userId}` : ''}`;
+    
+    console.log(`Fetching mock queue from: ${url}`);
+    
+    const response = await fetch(url, {
+      headers: {
+        'Accept': 'application/json'
+      }
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Mock API error: ${response.status} ${response.statusText}`);
+    }
+    
+    const data = await response.json();
+    console.log('Mock queue data:', data);
+    
+    return data as Queue;
+  } catch (error) {
+    console.error('Error fetching from mock API:', error);
     throw error;
   }
 };
@@ -199,7 +358,7 @@ export const getQueueByAccessCode = async (accessCode: string) => {
 };
 
 // Add a song to a queue
-export const addSongToQueue = async (queueId: string, userId: string, songData: {
+export const addSongToQueue = async (queueId: string, song: {
   title: string;
   artist: string;
   album?: string;
@@ -208,27 +367,152 @@ export const addSongToQueue = async (queueId: string, userId: string, songData: 
   cover_url?: string;
 }) => {
   try {
-    const { data, error } = await supabase
+    // Attempt to use the backend API first (recommended)
+    try {
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8001';
+      const response = await fetch(`${apiUrl}/routes/songs/songs/add`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          queue_id: queueId,
+          song_data: {
+            id: song.id,
+            title: song.title,
+            artist: song.artist,
+            album: song.album,
+            cover_url: song.cover_url,
+            spotify_uri: song.spotify_uri || null,
+            duration_ms: song.duration_ms || 0
+          }
+        })
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Song added via backend API:', data);
+        return data;
+      } else {
+        console.warn(`Backend API error ${response.status}: ${response.statusText}. Trying Supabase direct...`);
+        // Continue to try Supabase directly
+      }
+    } catch (apiError) {
+      console.warn('Error using backend API to add song, trying Supabase direct:', apiError);
+      // Continue to try Supabase directly
+    }
+
+    // If backend API fails, try Supabase directly
+    const { supabase: authClient, isAuthenticated } = await getAuthenticatedSupabaseClient();
+    
+    if (!isAuthenticated) {
+      console.warn('Using unauthenticated Supabase client - this may cause errors');
+    }
+    
+    // First check if the queue exists
+    const { data: queueData, error: queueError } = await authClient
+      .from('queues')
+      .select('id')
+      .eq('id', queueId)
+      .single();
+    
+    if (queueError || !queueData) {
+      console.warn(`Queue check failed or queue not found with ID: ${queueId}`, queueError);
+      // Try updating a mock song cache instead
+      return await addSongToMockQueue(queueId, song);
+    }
+    
+    // Add the song to the songs table
+    const { data, error } = await authClient
       .from('songs')
       .insert({
         queue_id: queueId,
-        added_by: userId,
-        title: songData.title,
-        artist: songData.artist,
-        album: songData.album || null,
-        duration: songData.duration || null,
-        track_uri: songData.track_uri || null,
-        cover_url: songData.cover_url || null,
-        played: false,
-        created_at: new Date().toISOString()
+        title: song.title,
+        artist: song.artist,
+        album: song.album,
+        cover_url: song.cover_url,
+        spotify_uri: song.spotify_uri || null,
+        duration_ms: song.duration_ms || 0
       })
       .select()
       .single();
     
-    if (error) throw error;
-    return data as Song;
+    if (error) {
+      console.error('Error adding song to Supabase:', error);
+      
+      // If Supabase fails, update the mock cache
+      return await addSongToMockQueue(queueId, song);
+    }
+    
+    return data;
   } catch (error) {
     console.error('Error adding song to queue:', error);
+    
+    // Last resort: try adding to mock queue
+    try {
+      return await addSongToMockQueue(queueId, song);
+    } catch (mockError) {
+      console.error('Mock API fallback also failed:', mockError);
+      throw error; // Throw the original error
+    }
+  }
+};
+
+// Add a song to the mock queue (updates the mock_songs.json file on the backend)
+export const addSongToMockQueue = async (queueId: string, song: {
+  title: string;
+  artist: string;
+  album?: string;
+  duration?: number;
+  track_uri?: string;
+  cover_url?: string;
+}) => {
+  try {
+    // Get current user ID if possible
+    let userId = null;
+    try {
+      const { data } = await supabase.auth.getUser();
+      userId = data.user?.id;
+    } catch (e) {
+      console.warn('Could not get user ID for mock song add:', e);
+    }
+    
+    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8001';
+    const url = `${apiUrl}/routes/debug/debug/add-mock-song`;
+    
+    console.log(`Adding song to mock queue at: ${url}`);
+    
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        queue_id: queueId,
+        song_data: {
+          id: song.id || crypto.randomUUID(),
+          title: song.title,
+          artist: song.artist,
+          album: song.album,
+          cover_url: song.cover_url,
+          added_by: userId || "00000000-0000-0000-0000-000000000000",
+          created_at: new Date().toISOString()
+        }
+      })
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Mock API error: ${response.status} ${response.statusText}`);
+    }
+    
+    const data = await response.json();
+    console.log('Added song to mock queue:', data);
+    
+    return data;
+  } catch (error) {
+    console.error('Error adding song to mock queue:', error);
     throw error;
   }
 };

@@ -46,15 +46,26 @@ export function Navigation() {
     navigate('/login');
   };
 
+  const toggleMenu = (isOpen: boolean) => {
+    setIsMenuOpen(isOpen);
+    
+    // Dispatch custom event for layout adjustments
+    window.dispatchEvent(
+      new CustomEvent('sidebar-toggle', {
+        detail: { isOpen }
+      })
+    );
+  };
+
   const closeMenu = () => {
-    setIsMenuOpen(false);
+    toggleMenu(false);
   };
 
   return (
     <>
       {/* Mobile menu button */}
       <button
-        onClick={() => setIsMenuOpen(!isMenuOpen)}
+        onClick={() => toggleMenu(!isMenuOpen)}
         className="lg:hidden fixed top-4 right-4 z-50 p-2 rounded-full bg-gray-900/80 backdrop-blur-sm border border-gray-800"
       >
         {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -109,8 +120,8 @@ export function Navigation() {
           <div className="p-4 border-t border-gray-800">
             {user ? (
               <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <button className="flex items-center gap-3 w-full px-3 py-2 rounded-lg hover:bg-gray-800/50 transition-colors">
+                <DropdownMenuTrigger className="flex items-center gap-3 w-full px-3 py-2 rounded-lg hover:bg-gray-800/50 transition-colors">
+                  <div className="flex items-center gap-3 w-full">
                     <Avatar className="h-8 w-8 border border-gray-700">
                       <AvatarImage src="" />
                       <AvatarFallback className="bg-purple-900/50 text-white">
@@ -125,7 +136,7 @@ export function Navigation() {
                         {user.email}
                       </p>
                     </div>
-                  </button>
+                  </div>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="min-w-[200px] bg-gray-900 border-gray-800 text-white" align="end">
                   <DropdownMenuLabel>My Account</DropdownMenuLabel>

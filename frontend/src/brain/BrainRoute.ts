@@ -19,6 +19,7 @@ import {
   GetUrlInfoData,
   RefreshTokenData,
   SearchSongsData,
+  SearchSongsParams,
   SearchSpotifySongsData,
   SetupDatabaseData,
   SpotifyAuthRequest,
@@ -120,7 +121,7 @@ export namespace Brain {
    * @tags debug, dbtn/module:debug
    * @name debug_health_check
    * @summary Health check endpoint
-   * @request GET:/routes/debug/health
+   * @request GET:/debug/health
    */
   export namespace debug_health_check {
     export type RequestParams = {};
@@ -135,7 +136,7 @@ export namespace Brain {
    * @tags debug, dbtn/module:debug
    * @name debug_request
    * @summary Request debug info
-   * @request GET:/routes/debug/request
+   * @request GET:/debug/request
    */
   export namespace debug_request {
     export type RequestParams = {};
@@ -150,7 +151,7 @@ export namespace Brain {
    * @tags debug, dbtn/module:debug
    * @name debug_system_info
    * @summary System debug info
-   * @request GET:/routes/debug/system
+   * @request GET:/debug/system
    */
   export namespace debug_system_info {
     export type RequestParams = {};
@@ -299,17 +300,11 @@ export namespace Brain {
    * @tags dbtn/module:songs
    * @name search_songs
    * @summary Search Songs
-   * @request GET:/routes/songs/search
+   * @request GET:/routes/songs/songs/search
    */
   export namespace search_songs {
     export type RequestParams = {};
-    export type RequestQuery = {
-      /**
-       * Query
-       * @minLength 1
-       */
-      query: string;
-    };
+    export type RequestQuery = SearchSongsParams;
     export type RequestBody = never;
     export type RequestHeaders = {};
     export type ResponseBody = SearchSongsData;
@@ -320,7 +315,7 @@ export namespace Brain {
    * @tags dbtn/module:songs
    * @name add_song_to_queue
    * @summary Add Song To Queue
-   * @request POST:/routes/songs/add
+   * @request POST:/routes/songs/songs/add
    */
   export namespace add_song_to_queue {
     export type RequestParams = {};

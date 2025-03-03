@@ -129,11 +129,11 @@ export class Brain<SecurityDataType = unknown> extends HttpClient<SecurityDataTy
    * @tags debug, dbtn/module:debug
    * @name debug_health_check
    * @summary Health check endpoint
-   * @request GET:/routes/debug/health
+   * @request GET:/debug/health
    */
   debug_health_check = (params: RequestParams = {}) =>
     this.request<DebugHealthCheckData, any>({
-      path: `/routes/debug/health`,
+      path: `/debug/health`,
       method: "GET",
       ...params,
     });
@@ -144,11 +144,11 @@ export class Brain<SecurityDataType = unknown> extends HttpClient<SecurityDataTy
    * @tags debug, dbtn/module:debug
    * @name debug_request
    * @summary Request debug info
-   * @request GET:/routes/debug/request
+   * @request GET:/debug/request
    */
   debug_request = (params: RequestParams = {}) =>
     this.request<DebugRequestData, any>({
-      path: `/routes/debug/request`,
+      path: `/debug/request`,
       method: "GET",
       ...params,
     });
@@ -159,11 +159,11 @@ export class Brain<SecurityDataType = unknown> extends HttpClient<SecurityDataTy
    * @tags debug, dbtn/module:debug
    * @name debug_system_info
    * @summary System debug info
-   * @request GET:/routes/debug/system
+   * @request GET:/debug/system
    */
   debug_system_info = (params: RequestParams = {}) =>
     this.request<DebugSystemInfoData, any>({
-      path: `/routes/debug/system`,
+      path: `/debug/system`,
       method: "GET",
       ...params,
     });
@@ -299,13 +299,15 @@ export class Brain<SecurityDataType = unknown> extends HttpClient<SecurityDataTy
    * @tags dbtn/module:songs
    * @name search_songs
    * @summary Search Songs
-   * @request GET:/routes/songs/search
+   * @request GET:/routes/songs/songs/search
+   * @secure
    */
-  search_songs = (query: SearchSongsParams, params: RequestParams = {}) =>
-    this.request<SearchSongsData, SearchSongsError>({
-      path: `/routes/songs/search`,
+  search_songs = (query?: { q?: string; limit?: number }, params: RequestParams = {}) =>
+    this.request<Track[], any>({
+      path: `/routes/songs/songs/search`,
       method: "GET",
       query: query,
+      secure: true,
       ...params,
     });
 
@@ -315,11 +317,11 @@ export class Brain<SecurityDataType = unknown> extends HttpClient<SecurityDataTy
    * @tags dbtn/module:songs
    * @name add_song_to_queue
    * @summary Add Song To Queue
-   * @request POST:/routes/songs/add
+   * @request POST:/routes/songs/songs/add
    */
   add_song_to_queue = (data: AddSongRequest, params: RequestParams = {}) =>
     this.request<AddSongToQueueData, AddSongToQueueError>({
-      path: `/routes/songs/add`,
+      path: `/routes/songs/songs/add`,
       method: "POST",
       body: data,
       type: ContentType.Json,

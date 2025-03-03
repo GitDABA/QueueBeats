@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "../components/Button";
-import { Navigation } from "../components/Navigation";
 import { AuthInit } from "../components/AuthInit";
 import { AuthProvider } from "../components/AuthProvider";
 import { ProtectedRoute } from "../components/ProtectedRoute";
@@ -17,6 +16,7 @@ import { subscribeSongsInQueue, subscribeVotesForQueue, subscribeQueueChanges, E
 import { markSongAsPlayed } from "../utils/queueHelpers";
 import { toast } from "sonner";
 import { ToasterProvider } from "../components/ToasterProvider";
+import MainLayout from "../components/MainLayout";
 
 export default function QueueView() {
   return (
@@ -24,7 +24,9 @@ export default function QueueView() {
       <AuthInit>
         <AuthProvider>
           <ProtectedRoute>
-            <QueueViewContent />
+            <MainLayout>
+              <QueueViewContent />
+            </MainLayout>
           </ProtectedRoute>
         </AuthProvider>
       </AuthInit>
@@ -52,6 +54,8 @@ const getActiveSongs = (songs: SongWithVotes[]) => {
 
 function QueueViewContent() {
   const { queueId } = useParams<{ queueId: string }>();
+  const navigate = useNavigate();
+  const { user } = useAuth();
   
   // Redirect to dashboard if no queue ID
   useEffect(() => {
@@ -59,8 +63,6 @@ function QueueViewContent() {
       navigate("/dashboard");
     }
   }, [queueId, navigate]);
-  const navigate = useNavigate();
-  const { user } = useAuth();
   
   const [queue, setQueue] = useState<Queue | null>(null);
   const [songs, setSongs] = useState<SongWithVotes[]>([]);
@@ -71,6 +73,82 @@ function QueueViewContent() {
   const [error, setError] = useState<string | null>(null);
   const [showQrCode, setShowQrCode] = useState(false);
   
+  // Function to refresh songs
+  const refreshSongs = async () => {
+    if (!queueId || !user?.id) return;
+    
+    try {
+      setLoadingSongs(true);
+      const songsData = await getQueueSongs(queueId, user.id);
+      setSongs(songsData);
+      toast.success("Songs refreshed");
+    } catch (err: any) {
+      console.error("Error refreshing songs:", err);
+      toast.error("Failed to refresh songs");
+    } finally {
+      setLoadingSongs(false);
+    }
+  };
+  
+  // Move song up in the queue
+  const handleMoveUp = async (songId: string) => {
+    try {
+      const activeSongs = getActiveSongs(songs);
+      const currentIndex = activeSongs.findIndex(song => song.id === songId);
+      
+      if (currentIndex <= 0) return; // Already at the top
+      
+      const newPosition = activeSongs[currentIndex - 1].position || 0;
+      await updateSongPosition(songId, newPosition - 1);
+      toast.success("Song moved up");
+      refreshSongs();
+    } catch (err) {
+      console.error("Error moving song up:", err);
+      toast.error("Failed to reorder queue");
+    }
+  };
+  
+  // Move song down in the queue
+  const handleMoveDown = async (songId: string) => {
+    try {
+      const activeSongs = getActiveSongs(songs);
+      const currentIndex = activeSongs.findIndex(song => song.id === songId);
+      
+      if (currentIndex === -1 || currentIndex >= activeSongs.length - 1) return; // Already at the bottom
+      
+      const newPosition = activeSongs[currentIndex + 1].position || 0;
+      await updateSongPosition(songId, newPosition + 1);
+      toast.success("Song moved down");
+      refreshSongs();
+    } catch (err) {
+      console.error("Error moving song down:", err);
+      toast.error("Failed to reorder queue");
+    }
+  };
+  
+  // Handle song removal
+  const handleRemoveSong = async (songId: string) => {
+    try {
+      // The actual removal logic is handled in the SongRowDJ component
+      // This is just for state updates
+      setSongs(prevSongs => prevSongs.filter(song => song.id !== songId));
+    } catch (err) {
+      console.error("Error handling song removal:", err);
+    }
+  };
+  
+  // Function to mark a song as played
+  const handlePlayNow = async (songId: string) => {
+    try {
+      await markSongAsPlayed(songId);
+      toast.success("Song marked as played");
+      refreshSongs();
+    } catch (err: any) {
+      console.error("Error marking song as played:", err);
+      toast.error("Failed to mark song as played");
+    }
+  };
+  
   // Fetch queue data
   useEffect(() => {
     if (!queueId || !user) return;
@@ -80,23 +158,35 @@ function QueueViewContent() {
         setLoading(true);
         setError(null);
         
+        console.log('Fetching queue data for queue ID:', queueId);
+        
         const queueData = await getQueueById(queueId);
         
-        // Check if queue exists and belongs to user
+        // Check if queue exists
         if (!queueData) {
-          setError("Queue not found");
+          console.warn(`Queue not found: ${queueId}`);
+          setError("Queue not found. Please check the URL or try again later.");
           return;
         }
         
+        // Check if queue belongs to user
         if (queueData.creator_id !== user.id) {
+          console.warn(`User ${user.id} tried to access queue ${queueId} owned by ${queueData.creator_id}`);
           setError("You don't have permission to view this queue");
           return;
         }
         
+        console.log('Queue data loaded successfully:', queueData.name);
         setQueue(queueData);
       } catch (err: any) {
         console.error("Error fetching queue:", err);
-        setError(err.message || "Failed to load queue");
+        
+        // Handle specific error cases
+        if (err.message?.includes('406') || err.message?.includes('Authentication')) {
+          setError("Authentication error. Please sign out and sign back in.");
+        } else {
+          setError(err.message || "Failed to load queue");
+        }
       } finally {
         setLoading(false);
       }
@@ -201,10 +291,12 @@ function QueueViewContent() {
         
         // We need to refresh the songs when votes change
         // This could be optimized to just update the specific song's vote count
-        fetchSongs();
+        refreshSongs();
       },
       (error) => {
         console.error("Vote subscription error:", error);
+        toast.error("Real-time updates interrupted");
+        setIsRealTimeActive(false);
       }
     );
     
@@ -253,70 +345,6 @@ function QueueViewContent() {
       }
     };
     
-  // Function to refresh songs manually if needed
-  const refreshSongs = () => {
-    setRefreshCounter(prev => prev + 1);
-  };
-  
-  // Move song up in the queue
-  const handleMoveUp = async (songId: string) => {
-    try {
-      const activeSongs = getActiveSongs(songs);
-      const currentIndex = activeSongs.findIndex(song => song.id === songId);
-      
-      if (currentIndex <= 0) return; // Already at the top
-      
-      const newPosition = activeSongs[currentIndex - 1].position || 0;
-      await updateSongPosition(songId, newPosition - 1);
-      toast.success("Song moved up");
-      refreshSongs();
-    } catch (err) {
-      console.error("Error moving song up:", err);
-      toast.error("Failed to reorder queue");
-    }
-  };
-  
-  // Move song down in the queue
-  const handleMoveDown = async (songId: string) => {
-    try {
-      const activeSongs = getActiveSongs(songs);
-      const currentIndex = activeSongs.findIndex(song => song.id === songId);
-      
-      if (currentIndex === -1 || currentIndex >= activeSongs.length - 1) return; // Already at the bottom
-      
-      const newPosition = activeSongs[currentIndex + 1].position || 0;
-      await updateSongPosition(songId, newPosition + 1);
-      toast.success("Song moved down");
-      refreshSongs();
-    } catch (err) {
-      console.error("Error moving song down:", err);
-      toast.error("Failed to reorder queue");
-    }
-  };
-  
-  // Handle song removal
-  const handleRemoveSong = async (songId: string) => {
-    try {
-      // The actual removal logic is handled in the SongRowDJ component
-      // This is just for state updates
-      setSongs(prevSongs => prevSongs.filter(song => song.id !== songId));
-    } catch (err) {
-      console.error("Error handling song removal:", err);
-    }
-  };
-  
-  // Function to mark a song as played
-  const handlePlayNow = async (songId: string) => {
-    try {
-      await markSongAsPlayed(songId);
-      toast.success("Song marked as played");
-      refreshSongs();
-    } catch (err: any) {
-      console.error("Error marking song as played:", err);
-      toast.error("Failed to mark song as played");
-    }
-  };
-    
     fetchSongs();
     
     // No need for polling anymore as we have real-time updates
@@ -334,51 +362,42 @@ function QueueViewContent() {
   
   if (loading) {
     return (
-      <div className="min-h-screen bg-background text-foreground">
-        <Navigation />
-        <main className="container mx-auto px-4 py-12">
-          <div className="flex items-center justify-center h-[60vh]">
-            <div className="text-center">
-              <div className="w-12 h-12 border-t-2 border-purple-500 border-solid rounded-full animate-spin mx-auto"></div>
-              <p className="mt-4 text-muted-foreground">Loading queue...</p>
-            </div>
-          </div>
-        </main>
+      <div className="container mx-auto px-4 py-12">
+        <div className="text-center">
+          <div className="w-12 h-12 border-t-2 border-purple-500 border-solid rounded-full animate-spin mx-auto"></div>
+          <p className="mt-4 text-muted-foreground">Loading queue...</p>
+        </div>
       </div>
     );
   }
   
   if (error || !queue) {
     return (
-      <div className="min-h-screen bg-background text-foreground">
-        <Navigation />
-        <main className="container mx-auto px-4 py-12">
-          <div className="max-w-lg mx-auto text-center">
-            <div className="w-16 h-16 mx-auto flex items-center justify-center rounded-full bg-red-500/20 mb-4">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-              </svg>
-            </div>
-            <h2 className="text-2xl font-bold mb-4">{error || "Queue not found"}</h2>
-            <p className="text-muted-foreground mb-6">
-              {error ? "There was an error loading the queue. Please try again later." : "The queue you're looking for doesn't exist or you don't have permission to view it."}
-            </p>
-            <Button
-              variant="default"
-              onClick={() => navigate('/dashboard')}
-            >
-              Back to Dashboard
-            </Button>
+      <div className="container mx-auto px-4 py-12">
+        <div className="max-w-lg mx-auto text-center">
+          <div className="w-16 h-16 mx-auto flex items-center justify-center rounded-full bg-red-500/20 mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
           </div>
-        </main>
+          <h2 className="text-2xl font-bold mb-4">{error || "Queue not found"}</h2>
+          <p className="text-muted-foreground mb-6">
+            {error ? "There was an error loading the queue. Please try again later." : "The queue you're looking for doesn't exist or you don't have permission to view it."}
+          </p>
+          <Button
+            variant="default"
+            onClick={() => navigate('/dashboard')}
+          >
+            Back to Dashboard
+          </Button>
+        </div>
       </div>
     );
   }
   
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <Navigation />
-      
+    <MainLayout>
+      {/* Live Queue View Header */}
       <main className="container mx-auto px-4 py-8">
         {/* Queue header */}
         <div className="mb-8">
@@ -598,17 +617,17 @@ function QueueViewContent() {
                     </div>
                   </div>
                 </div>
-              </div>
-              
-              <div className="mt-6">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="w-full"
-                  onClick={() => navigate(`/queue/${queueId}/settings`)}
-                >
-                  Edit Queue Settings
-                </Button>
+                
+                <div className="mt-6">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="w-full"
+                    onClick={() => navigate(`/queue/${queueId}/settings`)}
+                  >
+                    Edit Queue Settings
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
@@ -646,6 +665,6 @@ function QueueViewContent() {
           </div>
         </div>
       )}
-    </div>
+    </MainLayout>
   );
 }

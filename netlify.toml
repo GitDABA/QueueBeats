@@ -2,15 +2,63 @@
   base = "/"
   publish = "frontend/dist"
   command = "bash ./dependency_installation.sh && npm run build:netlify"
-  functions = "backend/netlify/functions"
+  functions = "netlify/functions"
 
 [build.environment]
   NODE_VERSION = "18"
   PYTHON_VERSION = "3.10"
 
 [functions]
-  directory = "backend/netlify/functions"
+  directory = "netlify/functions"
   node_bundler = "esbuild"
+
+[dev]
+  framework = "#static"
+  command = "node keep-server-running.js" # Simple command to keep server process running
+  port = 5173 # The port that the netlify dev will be accessible on
+  targetPort = 5173 # The port for your application server, framework or site generator
+  publish = "frontend/public" # If you use a static site generator, provide the publish directory
+  autoLaunch = true # Netlify Dev will open your site in a new browser tab
+
+# Edge Functions
+[[edge_functions]]
+  path = "/spotify/*"
+  function = "spotify-api"
+
+# Handle direct Spotify search requests
+[[redirects]]
+  from = "/spotify/search"
+  to = "/.netlify/functions/spotify-search"
+  status = 200
+  force = true
+
+# Handle Spotify API requests
+[[redirects]]
+  from = "/spotify/*"
+  to = "/.netlify/edge-functions/spotify-api"
+  status = 200
+  force = true
+
+# Handle Spotify search requests (redirecting from the problematic route)
+[[redirects]]
+  from = "/routes/spotify_search/spotify/search*"
+  to = "/.netlify/functions/spotify-search"
+  status = 200
+  force = true
+
+# Handle songs-add requests (redirecting from the problematic route)
+[[redirects]]
+  from = "/routes/songs/songs/add"
+  to = "/.netlify/functions/songs-add"
+  status = 200
+  force = true
+
+# Handle environment test requests
+[[redirects]]
+  from = "/env-test"
+  to = "/.netlify/functions/env-test"
+  status = 200
+  force = true
 
 # Handle API requests
 [[redirects]]

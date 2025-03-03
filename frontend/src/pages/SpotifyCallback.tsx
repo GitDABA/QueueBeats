@@ -1,141 +1,234 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import { getAccessToken, storeSpotifyTokens } from "../utils/spotify";
-import { useAuth } from "../utils/auth";
-import { Spinner } from "../components/Spinner";
+import { useEffect, useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { supabase } from '../utils/supabase';
+import { storeSpotifyTokens, exchangeCodeForToken } from '../utils/spotify';
+import { LoadingIndicator, ErrorAlert } from '../components/common';
+import { ensureSpotifyTokensTable } from '../utils/setupDatabase';
 
-export default function SpotifyCallback() {
-  const [status, setStatus] = useState<"loading" | "success" | "error">("loading");
-  const [errorMessage, setErrorMessage] = useState<string>("");
+type SpotifyCallbackState = 'loading' | 'connecting' | 'setup' | 'error' | 'success';
+
+const SpotifyCallback = () => {
+  const [error, setError] = useState<string | null>(null);
+  const [state, setState] = useState<SpotifyCallbackState>('loading');
+  const [setupMessage, setSetupMessage] = useState<string | null>(null);
   const navigate = useNavigate();
   const location = useLocation();
-  const { user } = useAuth();
 
   useEffect(() => {
-    const handleSpotifyCallback = async () => {
+    const handleCallback = async () => {
       try {
-        // Get the authorization code from the URL
-        const urlParams = new URLSearchParams(location.search);
-        const code = urlParams.get("code");
-        const error = urlParams.get("error");
+        setState('loading');
+        
+        // Extract the authorization code from URL
+        const params = new URLSearchParams(location.search);
+        const code = params.get('code');
+        const error = params.get('error');
 
         if (error) {
-          setStatus("error");
-          setErrorMessage(`Spotify authorization failed: ${error}`);
+          console.error('Error during Spotify authorization:', error);
+          setError(`Spotify authorization error: ${error}`);
+          setState('error');
           return;
         }
 
         if (!code) {
-          setStatus("error");
-          setErrorMessage("No authorization code received from Spotify");
+          console.error('No authorization code found in callback URL');
+          setError('No authorization code found in callback URL');
+          setState('error');
           return;
         }
 
-        if (!user) {
-          setStatus("error");
-          setErrorMessage("You must be logged in to connect to Spotify");
+        // Get the current user session
+        const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+        
+        if (sessionError) {
+          console.error('Error getting user session:', sessionError);
+          setError('Authentication error. Please log in again.');
+          setState('error');
           return;
         }
 
-        // Exchange code for access token
-        const tokens = await getAccessToken(code);
+        if (!sessionData.session) {
+          console.error('No active session found');
+          setError('No active session found. Please log in again.');
+          setState('error');
+          return;
+        }
 
-        // Store tokens in database
-        await storeSpotifyTokens(user.id, tokens);
-
-        setStatus("success");
-
-        // Redirect back to DJ dashboard
-        setTimeout(() => {
-          navigate("/Dashboard");
-        }, 1500);
-      } catch (error) {
-        console.error("Error processing Spotify callback:", error);
-        setStatus("error");
-        setErrorMessage(
-          error instanceof Error ? error.message : "An unknown error occurred"
-        );
+        const userId = sessionData.session.user.id;
+        
+        // Before proceeding, check if the necessary database table exists
+        console.log('Checking if spotify_tokens table exists...');
+        setState('setup');
+        const setupResult = await ensureSpotifyTokensTable();
+        
+        if (!setupResult.success) {
+          console.error('Failed to set up database:', setupResult.message);
+          setSetupMessage(setupResult.message);
+          // Stay in setup state to show setup UI
+          return;
+        }
+        
+        console.log('Database setup verified, proceeding with token exchange...');
+        setState('connecting');
+        
+        // Exchange the code for access and refresh tokens
+        try {
+          console.log('Exchanging authorization code for tokens...');
+          const tokens = await exchangeCodeForToken(code);
+          
+          if (!tokens) {
+            console.error('Failed to exchange code for tokens');
+            setError('Failed to connect to Spotify. Please try again.');
+            setState('error');
+            return;
+          }
+          
+          console.log('Successfully received tokens from Spotify');
+          
+          // Store the tokens in Supabase
+          try {
+            const storeResult = await storeSpotifyTokens(
+              userId, 
+              tokens.access_token, 
+              tokens.refresh_token, 
+              tokens.expires_in
+            );
+            
+            if (!storeResult) {
+              console.error('Failed to store Spotify tokens');
+              setError('Failed to save Spotify connection. Please try again.');
+              setState('error');
+              return;
+            }
+            
+            console.log('Successfully stored Spotify tokens');
+            setState('success');
+            
+            // Navigate back to the queue page
+            setTimeout(() => {
+              navigate('/queue');
+            }, 1000); // Slight delay to show success state
+          } catch (storeError) {
+            console.error('Error storing Spotify tokens:', storeError);
+            setError('Error saving Spotify connection. Please try again.');
+            setState('error');
+          }
+        } catch (tokenError) {
+          console.error('Error exchanging code for tokens:', tokenError);
+          setError('Error connecting to Spotify. Please try again.');
+          setState('error');
+        }
+      } catch (e) {
+        console.error('Unexpected error in Spotify callback:', e);
+        setError('An unexpected error occurred. Please try again.');
+        setState('error');
       }
     };
 
-    handleSpotifyCallback();
-  }, [location.search, navigate, user]);
+    handleCallback();
+  }, [location, navigate]);
 
-  return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-black to-purple-900 p-4">
-      <div className="w-full max-w-md p-8 space-y-6 bg-black/40 backdrop-blur-lg rounded-xl border border-white/10 shadow-xl">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4">
-            {status === "loading" && "Connecting to Spotify..."}
-            {status === "success" && "Connected to Spotify!"}
-            {status === "error" && "Connection Error"}
-          </h1>
-
-          <div className="flex justify-center mb-6">
-            {status === "loading" && <Spinner size="lg" />}
-            {status === "success" && (
-              <div className="w-16 h-16 flex items-center justify-center rounded-full bg-green-500/20 text-green-500">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-10 w-10"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-              </div>
-            )}
-            {status === "error" && (
-              <div className="w-16 h-16 flex items-center justify-center rounded-full bg-red-500/20 text-red-500">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-10 w-10"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </div>
-            )}
-          </div>
-
-          {status === "loading" && (
-            <p className="text-white/70">
-              Completing Spotify authorization...
-            </p>
-          )}
-
-          {status === "success" && (
-            <p className="text-white/70">
-              Successfully connected to Spotify! Redirecting to dashboard...
-            </p>
-          )}
-
-          {status === "error" && (
-            <>
-              <p className="text-white/70 mb-4">{errorMessage}</p>
+  // Error state
+  if (state === 'error' && error) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gray-50">
+        <div className="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow-md">
+          <div className="text-center">
+            <h2 className="mt-6 text-3xl font-extrabold text-gray-900">Spotify Connection Error</h2>
+            <ErrorAlert message={error} />
+            <div className="mt-6">
               <button
-                className="px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg transition-colors"
-                onClick={() => navigate("/Dashboard")}
+                onClick={() => navigate('/settings')}
+                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
-                Return to Dashboard
+                Back to Settings
               </button>
-            </>
-          )}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  
+  // Setup state
+  if (state === 'setup') {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gray-50">
+        <div className="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow-md">
+          <div className="text-center">
+            <h2 className="mt-6 text-3xl font-extrabold text-gray-900">Setting Up Spotify Integration</h2>
+            <p className="mt-2 text-sm text-gray-600">
+              {setupMessage || 'Please wait while we set up the Spotify integration...'}
+            </p>
+            <div className="mt-6">
+              <LoadingIndicator />
+            </div>
+            <div className="mt-6">
+              <button
+                onClick={() => navigate('/spotify-setup')}
+                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+              >
+                Go to Setup Page
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  
+  // Success state
+  if (state === 'success') {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gray-50">
+        <div className="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow-md">
+          <div className="text-center">
+            <h2 className="mt-6 text-3xl font-extrabold text-gray-900">Successfully Connected!</h2>
+            <p className="mt-2 text-sm text-gray-600">
+              Your Spotify account is now connected to QueueBeats.
+            </p>
+            <div className="mt-6">
+              <svg
+                className="mx-auto h-12 w-12 text-green-500"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+            </div>
+            <div className="mt-6">
+              <p className="text-sm text-gray-500">Redirecting you to the app...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Loading or connecting state (default)
+  return (
+    <div className="flex items-center justify-center min-h-screen bg-gray-50">
+      <div className="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow-md">
+        <div className="text-center">
+          <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
+            {state === 'connecting' ? 'Connecting to Spotify' : 'Loading...'}
+          </h2>
+          <p className="mt-2 text-sm text-gray-600">Please wait while we connect your account...</p>
+          <div className="mt-6">
+            <LoadingIndicator />
+          </div>
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default SpotifyCallback;

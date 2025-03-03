@@ -48,6 +48,19 @@ def get_supabase_config_internal() -> tuple[str, str]:
         fallback_key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRodXFmbWZncG9kYXh4dnlkYmN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA4NTQyNzgsImV4cCI6MjA1NjQzMDI3OH0.jYnRbXoGR9lliBLj_L0D1jundPXa2SV55Enp04w8YO0"
         return fallback_url, fallback_key
 
+def get_supabase_config() -> dict:
+    """
+    Get Supabase configuration as a dictionary for use in API endpoints.
+    
+    Returns:
+        dict: Dictionary with url and anon_key
+    """
+    url, anon_key = get_supabase_config_internal()
+    return {
+        "url": url,
+        "anon_key": anon_key
+    }
+
 @router.get("/")
 def get_supabase_config(request: Request) -> SupabaseConfig:
     """Get the Supabase configuration details needed for the frontend."""

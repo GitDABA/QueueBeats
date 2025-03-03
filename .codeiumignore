@@ -1,0 +1,7 @@
+# Allow all .env files (normally ignored)
+!.env
+!.env.*
+!frontend/.env
+!frontend/.env.*
+!backend/.env
+!backend/.env.*

@@ -149,6 +149,47 @@ export interface Database {
           }
         ]
       }
+      user_settings: {
+        Row: {
+          id: string
+          user_id: string
+          spotify_access_token: string | null
+          spotify_refresh_token: string | null
+          spotify_token_expires_at: string | null
+          settings: Json | null
+          updated_at: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          spotify_access_token?: string | null
+          spotify_refresh_token?: string | null
+          spotify_token_expires_at?: string | null
+          settings?: Json | null
+          updated_at?: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          spotify_access_token?: string | null
+          spotify_refresh_token?: string | null
+          spotify_token_expires_at?: string | null
+          settings?: Json | null
+          updated_at?: string
+          created_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_settings_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       votes: {
         Row: {
           id: string

@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# QueueBeats Frontend Server Startup Script
+# This script starts the Vite development server for the frontend
+# It loads environment variables from the root .env file and uses the specified port
+
 # Load environment variables from parent directory
 source ../.env
 
@@ -7,5 +11,5 @@ source ../.env
 PORT=${FRONTEND_PORT:-5173}
 echo "Starting frontend server on port $PORT"
 
-# The port is set in vite.config.ts from environment variables
-yarn dev
+# Use npm instead of yarn to avoid interactive prompts
+npm run dev

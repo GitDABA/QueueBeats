@@ -1,26 +1,45 @@
-import express from 'express';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
-import cors from 'cors';
+import dotenv from 'dotenv';
+import { createRequire } from 'module';
+import { spawn } from 'child_process';
 
-const app = express();
-const port = 5280;
+const require = createRequire(import.meta.url);
+const path = require('path');
 
-// Get the directory of the current module
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+// Load environment variables from .env file
+dotenv.config({ path: join(dirname(fileURLToPath(import.meta.url)), '..', '.env') });
 
-// Enable CORS
-app.use(cors());
+// Instead of running our own Express server, let's use Vite's dev server
+// which handles module loading and MIME types correctly
+console.log('Starting Vite development server...');
 
-// Serve static files from /public directory
-app.use(express.static(join(__dirname, 'public')));
+// Use FRONTEND_PORT from .env or fallback to 5173
+const port = parseInt(process.env.FRONTEND_PORT || '5173', 10);
 
-// Fallback to index.html for SPA routing
-app.get('*', (req, res) => {
-  res.sendFile(join(__dirname, 'public', 'index.html'));
+// Start Vite dev server
+const vite = spawn('npx', ['vite'], {
+  stdio: 'inherit',
+  shell: true,
+  env: {
+    ...process.env,
+    VITE_API_URL: process.env.VITE_API_URL || 'http://localhost:8001',
+    PORT: port.toString()
+  }
 });
 
-app.listen(port, () => {
-  console.log(`Frontend server running at http://localhost:${port}`);
+vite.on('error', (error) => {
+  console.error('Failed to start Vite server:', error);
+  process.exit(1);
+});
+
+// Handle process termination
+process.on('SIGINT', () => {
+  vite.kill();
+  process.exit(0);
+});
+
+process.on('SIGTERM', () => {
+  vite.kill();
+  process.exit(0);
 });

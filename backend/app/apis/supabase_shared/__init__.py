@@ -58,3 +58,34 @@ def get_config_from_request(request, db_module=None):
             supabase_anon_key="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRodXFmbWZncG9kYXh4dnlkYmN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA4NTQyNzgsImV4cCI6MjA1NjQzMDI3OH0.jYnRbXoGR9lliBLj_L0D1jundPXa2SV55Enp04w8YO0",
             api_base_url="https://queuebeats.databutton.app"
         )
+
+def get_supabase_client():
+    """
+    Create and return a Supabase client using environment variables
+    or fallback defaults.
+    
+    Returns:
+        A configured Supabase client or None if initialization fails
+    """
+    try:
+        # Import the Supabase client
+        try:
+            from supabase import create_client, Client
+        except ImportError:
+            print("Supabase Python client not installed, attempting to install...")
+            import subprocess
+            import sys
+            subprocess.check_call([sys.executable, "-m", "pip", "install", "supabase"])
+            from supabase import create_client, Client
+        
+        # Get credentials from environment variables with fallbacks
+        import os
+        supabase_url = os.environ.get("SUPABASE_URL", "https://thuqfmfgpodaxxvydbcz.supabase.co")
+        supabase_key = os.environ.get("SUPABASE_ANON_KEY", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRodXFmbWZncG9kYXh4dnlkYmN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA4NTQyNzgsImV4cCI6MjA1NjQzMDI3OH0.jYnRbXoGR9lliBLj_L0D1jundPXa2SV55Enp04w8YO0")
+        
+        # Create and return the client
+        client = create_client(supabase_url, supabase_key)
+        return client
+    except Exception as e:
+        print(f"Error creating Supabase client: {str(e)}")
+        return None

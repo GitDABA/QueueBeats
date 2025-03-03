@@ -25,16 +25,9 @@ export default function GuestQueueView() {
 }
 
 function GuestQueueViewContent() {
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const accessCode = searchParams.get("code") || "";
-  
-  // Redirect to join queue if no access code
-  useEffect(() => {
-    if (!accessCode) {
-      navigate("/join-queue");
-    }
-  }, [accessCode, navigate]);
-  const navigate = useNavigate();
   const { user } = useAuth();
   
   const [queue, setQueue] = useState<Queue | null>(null);
@@ -44,6 +37,13 @@ function GuestQueueViewContent() {
   const [error, setError] = useState<string | null>(null);
   const [refreshCounter, setRefreshCounter] = useState(0);
   const [isRealTimeActive, setIsRealTimeActive] = useState(false);
+  
+  // Redirect to join queue if no access code
+  useEffect(() => {
+    if (!accessCode) {
+      navigate("/join-queue");
+    }
+  }, [accessCode, navigate]);
   
   // Fetch queue data
   useEffect(() => {
@@ -76,136 +76,175 @@ function GuestQueueViewContent() {
     };
     
     fetchQueueData();
-  }, [accessCode]);
+  }, [accessCode, navigate]);
   
   // Set up real-time subscriptions
   useEffect(() => {
     if (!queue) return;
     
-    // Initial fetch
-    const fetchSongs = async () => {
-      try {
-        setLoadingSongs(true);
-        
-        const songsData = await getQueueSongs(queue.id, user?.id);
-        setSongs(songsData);
-      } catch (err: any) {
-        console.error("Error fetching songs:", err);
-        toast.error("Failed to load songs");
-      } finally {
-        setLoadingSongs(false);
-      }
-    };
+    let unsubFunctions: Array<() => void> = [];
     
-    fetchSongs();
-    
-    // Set up real-time subscriptions
-    const unsubscribeSongs = subscribeSongsInQueue(
-      queue.id,
-      (payload) => {
-        const { new: newSong, old: oldSong, eventType } = payload;
-        
-        console.log(`Song ${eventType} event:`, newSong || oldSong);
-        setIsRealTimeActive(true);
-        
-        // Handle different event types
-        switch (eventType) {
-          case 'INSERT':
-            if (newSong) {
-              setSongs(prev => {
-                // Check if song already exists
-                if (prev.find(s => s.id === newSong.id)) return prev;
+    try {
+      // Initial fetch
+      const fetchSongs = async () => {
+        try {
+          setLoadingSongs(true);
+          
+          const songsData = await getQueueSongs(queue.id, user?.id);
+          setSongs(songsData);
+        } catch (err: any) {
+          console.error("Error fetching songs:", err);
+          toast.error("Failed to load songs");
+        } finally {
+          setLoadingSongs(false);
+        }
+      };
+      
+      fetchSongs();
+      
+      // Set up real-time subscriptions
+      const unsubscribeSongs = subscribeSongsInQueue(
+        queue.id,
+        (payload) => {
+          const { new: newSong, old: oldSong, eventType } = payload;
+          
+          console.log(`Song ${eventType} event:`, newSong || oldSong);
+          setIsRealTimeActive(true);
+          
+          // Handle different event types
+          switch (eventType) {
+            case 'INSERT':
+              if (newSong) {
+                setSongs(prev => {
+                  // Check if song already exists
+                  if (prev.find(s => s.id === newSong.id)) return prev;
+                  
+                  // Add new song with required fields for display
+                  return [...prev, { 
+                    ...newSong, 
+                    total_votes: 0,
+                    user_has_voted: false
+                  }];
+                });
                 
-                // Add new song with required fields for display
-                return [...prev, { 
-                  ...newSong, 
-                  total_votes: 0,
-                  user_has_voted: false
-                }];
-              });
-              
-              // Show toast notification for new songs
-              toast.success(`New song added: ${newSong.title}`);
-            }
-            break;
-            
-          case 'UPDATE':
-            if (newSong) {
-              setSongs(prev => prev.map(song => 
-                song.id === newSong.id ? { 
-                  ...song, 
-                  ...newSong,
-                  // Preserve user_has_voted from previous state
-                  user_has_voted: song.user_has_voted
-                } : song
-              ));
-              
-              // If song was marked as played, show notification
-              if (newSong.played && oldSong && !oldSong.played) {
-                toast.success(`"${newSong.title}" is now playing!`);
+                // Show toast notification for new songs
+                toast.success(`New song added: ${newSong.title}`);
               }
-            }
-            break;
-            
-          case 'DELETE':
-            if (oldSong) {
-              setSongs(prev => prev.filter(song => song.id !== oldSong.id));
-              toast.info(`Song removed: ${oldSong.title}`);
-            }
-            break;
+              break;
+              
+            case 'UPDATE':
+              if (newSong) {
+                setSongs(prev => prev.map(song => 
+                  song.id === newSong.id ? { 
+                    ...song, 
+                    ...newSong,
+                    // Preserve user_has_voted from previous state
+                    user_has_voted: song.user_has_voted
+                  } : song
+                ));
+                
+                // If song was marked as played, show notification
+                if (newSong.played && oldSong && !oldSong.played) {
+                  toast.success(`"${newSong.title}" is now playing!`);
+                }
+              }
+              break;
+              
+            case 'DELETE':
+              if (oldSong) {
+                setSongs(prev => prev.filter(song => song.id !== oldSong.id));
+              }
+              break;
+          }
+        },
+        (error) => {
+          console.error("Error in songs subscription:", error);
+          toast.error("Lost connection to song updates");
         }
-      },
-      (error) => {
-        console.error("Song subscription error:", error);
-        toast.error("Real-time updates interrupted");
-        setIsRealTimeActive(false);
-      }
-    );
-    
-    // Subscribe to vote changes
-    const unsubscribeVotes = subscribeVotesForQueue(
-      queue.id,
-      (payload) => {
-        const { new: newVote, old: oldVote, eventType } = payload;
-        
-        console.log(`Vote ${eventType} event:`, newVote || oldVote);
-        setIsRealTimeActive(true);
-        
-        // We need to refresh the songs when votes change
-        // This could be optimized to just update the specific song's vote count
-        fetchSongs();
-      },
-      (error) => {
-        console.error("Vote subscription error:", error);
-      }
-    );
-    
-    // Subscribe to queue changes
-    const unsubscribeQueue = subscribeQueueChanges(
-      queue.id,
-      (payload) => {
-        const { new: newQueue, eventType } = payload;
-        
-        console.log(`Queue ${eventType} event:`, newQueue);
-        setIsRealTimeActive(true);
-        
-        if (eventType === 'UPDATE' && newQueue) {
-          setQueue(newQueue as Queue);
+      );
+      
+      unsubFunctions.push(unsubscribeSongs);
+      
+      // Subscribe to vote changes
+      const unsubscribeVotes = subscribeVotesForQueue(
+        queue.id,
+        (payload) => {
+          const { new: newVote, old: oldVote, eventType } = payload;
+          
+          console.log(`Vote ${eventType} event:`, newVote || oldVote);
+          setIsRealTimeActive(true);
+          
+          // Only handle votes for active user if they're logged in
+          if (user && (newVote?.user_id === user.id || oldVote?.user_id === user.id)) {
+            // On vote added or removed, update the user_has_voted property
+            setSongs(prev => prev.map(song => {
+              if ((newVote && song.id === newVote.song_id) || (oldVote && song.id === oldVote.song_id)) {
+                return {
+                  ...song,
+                  user_has_voted: eventType === 'INSERT'
+                };
+              }
+              return song;
+            }));
+          }
+          
+          // Always refresh songs when votes change to get updated counts
+          // Using a small timeout to avoid excessive refreshes
+          setTimeout(() => {
+            setRefreshCounter(prev => prev + 1);
+          }, 300);
+        },
+        (error) => {
+          console.error("Error in votes subscription:", error);
+          toast.error("Lost connection to vote updates");
         }
-      },
-      (error) => {
-        console.error("Queue subscription error:", error);
-      }
-    );
+      );
+      
+      unsubFunctions.push(unsubscribeVotes);
+      
+      // Subscribe to queue changes
+      const unsubscribeQueue = subscribeQueueChanges(
+        queue.id,
+        (payload) => {
+          const { new: newQueue, eventType } = payload;
+          
+          console.log(`Queue ${eventType} event:`, newQueue);
+          setIsRealTimeActive(true);
+          
+          // If queue was deleted or deactivated, show a message and redirect
+          if (eventType === 'DELETE' || (newQueue && !newQueue.is_active)) {
+            toast.error("This queue has been closed by the host");
+            setTimeout(() => {
+              navigate('/join-queue');
+            }, 3000);
+          }
+        },
+        (error) => {
+          console.error("Error in queue subscription:", error);
+          toast.error("Lost connection to queue updates");
+        }
+      );
+      
+      unsubFunctions.push(unsubscribeQueue);
+      
+    } catch (err) {
+      console.error("Error setting up real-time subscriptions:", err);
+      toast.error("Failed to connect to real-time updates");
+    }
     
+    // Cleanup function to unsubscribe from all channels
     return () => {
-      // Clean up all subscriptions
-      unsubscribeSongs();
-      unsubscribeVotes();
-      unsubscribeQueue();
+      console.log("Cleaning up subscriptions");
+      unsubFunctions.forEach(unsubFn => {
+        try {
+          unsubFn();
+        } catch (err) {
+          console.error("Error unsubscribing:", err);
+        }
+      });
       setIsRealTimeActive(false);
     };
-  }, [queue, user?.id]);
+  }, [queue, user, navigate, setRefreshCounter]);
   
   // Fetch queue songs when refresh is requested manually
   useEffect(() => {
@@ -227,8 +266,7 @@ function GuestQueueViewContent() {
     
     fetchSongs();
     
-    // No need for polling anymore as we have real-time updates
-  }, [queue, user?.id, refreshCounter]);
+  }, [queue, user?.id, refreshCounter, navigate]);
   
   // Function to refresh songs after voting
   const refreshSongs = () => {
@@ -392,6 +430,7 @@ function GuestQueueViewContent() {
                 ) : (
                   <div className="flex items-center text-xs text-gray-400 bg-gray-900/20 px-2 py-1 rounded-full">
                     <span className="relative flex h-2 w-2 mr-1.5">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-gray-500 opacity-75"></span>
                       <span className="relative inline-flex rounded-full h-2 w-2 bg-gray-500"></span>
                     </span>
                     Connecting...
