@@ -2,7 +2,6 @@
   base = "/"
   publish = "frontend/dist"
   command = "bash ./build.sh"
-  functions = "netlify/functions"
 
 [build.environment]
   NODE_VERSION = "16.20.2"
