@@ -1,33 +1,30 @@
 {
   "name": "queue-beats",
   "version": "1.0.0",
-  "description": "",
+  "description": "Music Queue Management App",
   "main": "index.js",
   "scripts": {
     "start:frontend:wrapper": "node frontend/server.js",
-    "start:backend:wrapper": "node backend/server.js",
-    "start:frontend": "cd frontend && ./run.sh",
-    "start:backend": "cd backend && ./run.sh",
+    "start:frontend": "cd frontend && npm run dev",
+    "start:backend": "cd backend && python -m api.main",
     "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
     "build": "bash ./build.sh",
-    "build:frontend": "cd frontend && npm install && npm run build",
-    "build:backend": "bash ./setup-backend.sh",
-    "build:netlify": "bash ./build.sh",
-    "postinstall": "bash -c \"cd frontend && bash ./install.sh && cd ../backend && bash ./install.sh\"",
-    "dependency_installation": "npm install && npm run postinstall",
-    "netlify:dev": "netlify dev",
-    "netlify:build": "netlify build",
-    "netlify:test": "node netlify-test.js"
+    "build:netlify": "bash ./build.sh"
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
     "@fastify/aws-lambda": "^3.4.0",
     "@fastify/cors": "^8.5.0",
+    "@supabase/supabase-js": "^2.39.6",
     "axios": "^1.8.1",
     "concurrently": "^8.2.1",
     "cors": "^2.8.5",
-    "dotenv": "^16.4.7",
+    "dotenv": "^16.4.1",
     "express": "^4.18.2",
-    "fastify": "^4.25.2"
+    "fastify": "^4.25.2",
+    "node-fetch": "^2.7.0"
   },
   "devDependencies": {
     "node-fetch": "^2.6.9"
