@@ -1,12 +1,16 @@
-# Node modules
+# Node.js dependencies
 node_modules/
-.pnp
-.pnp.js
+npm-debug.log
+yarn-error.log
+.pnpm-debug.log
 
-# Build artifacts
-dist/
-build/
-*.log
+# Build outputs
+/frontend/dist/
+/netlify/functions/deps/
+*.pyc
+__pycache__/
+.cache/
+.output/
 
 # Environment files
 .env
@@ -15,43 +19,16 @@ build/
 .env.test.local
 .env.production.local
 
-# Python virtual environment
-.venv/
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-
-# IDE folders
-.idea/
+# Editor directories and files
 .vscode/
-*.swp
-*.swo
-
-# OS generated files
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 .DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
 
-# Debug logs
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Coverage directory used by tools like istanbul
-coverage/
-
-# Cache
-.eslintcache
-.cache/
-.parcel-cache/
-.next/
-.nuxt/
-
-# Local Netlify folder
-.netlify
+# Temporary files
+tmp/
+temp/

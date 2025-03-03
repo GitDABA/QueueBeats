@@ -1,0 +1,21 @@
+{
+	"promptVSCodeSettings": true,
+	"geolocation": {
+		"data": {
+			"city": "Oslo",
+			"country": {
+				"code": "NO",
+				"name": "Norway"
+			},
+			"subdivision": {
+				"code": "03",
+				"name": "Oslo County"
+			},
+			"timezone": "Europe/Oslo",
+			"latitude": 59.905,
+			"longitude": 10.7487,
+			"postalCode": "1256"
+		},
+		"timestamp": 1741013817478
+	}
+}

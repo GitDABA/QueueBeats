@@ -1,0 +1,280 @@
+Starting frontend server on port 5173
+
+> queue-beats@0.0.0 dev
+> vite
+
+(!) the `splitVendorChunk` plugin doesn't have any effect when using the object form of `build.rollupOptions.manualChunks`. Consider using the function form instead.
+
+  VITE v4.4.5  ready in 3151 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+10:05:45 PM [vite] http proxy error at /routes/debug/supabase:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:45 PM [vite] http proxy error at /routes/debug/supabase:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:45 PM [vite] http proxy error at /routes/debug/supabase:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:45 PM [vite] http proxy error at /routes/debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:45 PM [vite] http proxy error at /routes/debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:45 PM [vite] http proxy error at /routes/debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:45 PM [vite] http proxy error at /debug/supabase:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:45 PM [vite] http proxy error at /debug/supabase:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:45 PM [vite] http proxy error at /debug/supabase:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:45 PM [vite] http proxy error at /debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:45 PM [vite] http proxy error at /debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:45 PM [vite] http proxy error at /debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:45 PM [vite] http proxy error at /debug/supabase:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:45 PM [vite] http proxy error at /debug/supabase:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:45 PM [vite] http proxy error at /debug/supabase:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:45 PM [vite] http proxy error at /debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:45 PM [vite] http proxy error at /debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:45 PM [vite] http proxy error at /debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:45 PM [vite] http proxy error at /debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:45 PM [vite] http proxy error at /debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:45 PM [vite] http proxy error at /debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:45 PM [vite] http proxy error at /debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:45 PM [vite] http proxy error at /routes/debug/supabase:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:45 PM [vite] http proxy error at /debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:45 PM [vite] http proxy error at /routes/debug/supabase:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:45 PM [vite] http proxy error at /debug/supabase:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:45 PM [vite] http proxy error at /routes/debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:45 PM [vite] http proxy error at /debug/supabase:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:45 PM [vite] http proxy error at /routes/debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:45 PM [vite] http proxy error at /debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:45 PM [vite] http proxy error at /debug/supabase:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:45 PM [vite] http proxy error at /debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:45 PM [vite] http proxy error at /debug/supabase:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:45 PM [vite] http proxy error at /debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:45 PM [vite] http proxy error at /debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:45 PM [vite] http proxy error at /debug/supabase:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:45 PM [vite] http proxy error at /debug/supabase:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:45 PM [vite] http proxy error at /debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:45 PM [vite] http proxy error at /debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:45 PM [vite] http proxy error at /debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:45 PM [vite] http proxy error at /debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:46 PM [vite] http proxy error at /routes/debug/supabase:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:46 PM [vite] http proxy error at /routes/debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:46 PM [vite] http proxy error at /debug/supabase:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:46 PM [vite] http proxy error at /debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:46 PM [vite] http proxy error at /debug/supabase:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:46 PM [vite] http proxy error at /debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:46 PM [vite] http proxy error at /debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:46 PM [vite] http proxy error at /routes/debug/supabase:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:46 PM [vite] http proxy error at /routes/debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:46 PM [vite] http proxy error at /debug/supabase:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:46 PM [vite] http proxy error at /debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:46 PM [vite] http proxy error at /debug/supabase:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:46 PM [vite] http proxy error at /debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:46 PM [vite] http proxy error at /debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:46 PM [vite] http proxy error at /debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:46 PM [vite] http proxy error at /routes/debug/supabase:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:46 PM [vite] http proxy error at /debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:46 PM [vite] http proxy error at /routes/debug/supabase:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:46 PM [vite] http proxy error at /debug/supabase:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:46 PM [vite] http proxy error at /routes/debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:46 PM [vite] http proxy error at /debug/supabase:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:46 PM [vite] http proxy error at /routes/debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:46 PM [vite] http proxy error at /debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:46 PM [vite] http proxy error at /debug/supabase:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:46 PM [vite] http proxy error at /debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:46 PM [vite] http proxy error at /debug/supabase:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:46 PM [vite] http proxy error at /debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:46 PM [vite] http proxy error at /debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:46 PM [vite] http proxy error at /debug/supabase:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:46 PM [vite] http proxy error at /debug/supabase:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:46 PM [vite] http proxy error at /debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:46 PM [vite] http proxy error at /debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:46 PM [vite] http proxy error at /debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:46 PM [vite] http proxy error at /debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:48 PM [vite] http proxy error at /routes/debug/supabase:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:48 PM [vite] http proxy error at /routes/debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:48 PM [vite] http proxy error at /debug/supabase:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:48 PM [vite] http proxy error at /debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:48 PM [vite] http proxy error at /debug/supabase:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:48 PM [vite] http proxy error at /debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:48 PM [vite] http proxy error at /debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:48 PM [vite] http proxy error at /routes/debug/supabase:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:48 PM [vite] http proxy error at /routes/debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:48 PM [vite] http proxy error at /debug/supabase:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:48 PM [vite] http proxy error at /debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:48 PM [vite] http proxy error at /debug/supabase:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:48 PM [vite] http proxy error at /debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:05:48 PM [vite] http proxy error at /debug/health:
+Error: connect ECONNREFUSED 127.0.0.1:8001
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)
+10:16:54 PM [vite] page reload src/brain.ts
+10:25:41 PM [vite] hmr update /src/AppWrapper.tsx, /src/index.css

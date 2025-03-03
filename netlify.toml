@@ -1,7 +1,7 @@
 [build]
   base = "/"
   publish = "frontend/dist"
-  command = "bash ./build.sh"
+  command = "bash ./netlify-build.sh"
 
 [build.environment]
   NODE_VERSION = "20.18.0"
@@ -24,31 +24,10 @@
   path = "/spotify/*"
   function = "spotify-api"
 
-# Handle direct Spotify search requests
+# Handle direct function request for testing deployment
 [[redirects]]
-  from = "/spotify/search"
-  to = "/.netlify/functions/spotify-search"
-  status = 200
-  force = true
-
-# Handle Spotify API requests
-[[redirects]]
-  from = "/spotify/*"
-  to = "/.netlify/edge-functions/spotify-api"
-  status = 200
-  force = true
-
-# Handle Spotify search requests (redirecting from the problematic route)
-[[redirects]]
-  from = "/routes/spotify_search/spotify/search*"
-  to = "/.netlify/functions/spotify-search"
-  status = 200
-  force = true
-
-# Handle songs-add requests (redirecting from the problematic route)
-[[redirects]]
-  from = "/routes/songs/songs/add"
-  to = "/.netlify/functions/songs-add"
+  from = "/test"
+  to = "/.netlify/functions/hello-world"
   status = 200
   force = true
 
@@ -59,24 +38,10 @@
   status = 200
   force = true
 
-# Handle API requests
+# Handle all other API requests
 [[redirects]]
   from = "/api/*"
-  to = "/.netlify/functions/api/:splat"
-  status = 200
-  force = true
-
-# Handle all supabase config requests
-[[redirects]]
-  from = "/supabase-config/*"
-  to = "/.netlify/functions/api/supabase-config/:splat"
-  status = 200
-  force = true
-
-# Handle OAuth callback
-[[redirects]]
-  from = "/auth/callback/*"
-  to = "/.netlify/functions/oauth-callback/:splat"
+  to = "/.netlify/functions/:splat"
   status = 200
   force = true
 
