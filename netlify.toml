@@ -1,16 +1,12 @@
 [build]
   base = "/"
   publish = "frontend/dist"
-  command = "bash ./netlify-build.sh"
+  command = "bash ./build.sh"
   functions = "netlify/functions"
 
 [functions]
   directory = "netlify/functions"
   node_bundler = "esbuild"
-  included_files = ['backend/netlify/functions/**']
-
-[functions."*.py"]
-  external_node_modules = []
 
 [dev]
   framework = "#static"
