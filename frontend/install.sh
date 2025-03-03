@@ -16,7 +16,7 @@ if command -v yarn &> /dev/null; then
     fi
     
     # Try yarn install with fallback options
-    yarn install --legacy-peer-deps || yarn install --ignore-engines --legacy-peer-deps || yarn install --network-timeout 300000 --legacy-peer-deps
+    yarn install --ignore-engines || yarn install --network-timeout 300000 --ignore-engines
     
     # Only run this in local development, not in CI/CD
     if [ "$CI" != "true" ] && [ -z "$NETLIFY" ]; then
