@@ -6,7 +6,7 @@
 
 [build.environment]
   NODE_VERSION = "18"
-  PYTHON_VERSION = "3.10"
+  PYTHON_VERSION = "3.10.12"
 
 [functions]
   directory = "netlify/functions"
