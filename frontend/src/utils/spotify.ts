@@ -8,7 +8,7 @@ const SPOTIFY_AUTH_ENDPOINT = 'https://accounts.spotify.com/authorize';
 const SPOTIFY_API_BASE = 'https://api.spotify.com/v1';
 
 // This should match the redirect URI registered in the Spotify Developer Dashboard
-export const REDIRECT_URI = `${window.location.origin}/spotify-callback`;
+export const REDIRECT_URI = `${window.location.origin}/auth/callback`;
 
 // These scopes allow for playback control and reading user library
 const SCOPES = [

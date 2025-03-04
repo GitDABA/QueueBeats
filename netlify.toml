@@ -52,6 +52,13 @@
   status = 200
   force = true
 
+# Handle Spotify auth callback
+[[redirects]]
+  from = "/auth/callback"
+  to = "/index.html"
+  status = 200
+  force = true
+
 # Handle all other API requests
 [[redirects]]
   from = "/api/*"
