@@ -69,7 +69,7 @@
 # Handle legacy API debug endpoints
 [[redirects]]
   from = "/.netlify/functions/api/debug/*"
-  to = "/.netlify/functions/api-debug"
+  to = "/.netlify/functions/api/debug/:splat"
   status = 200
   force = true
 
