@@ -66,6 +66,13 @@
   status = 200
   force = true
 
+# Handle legacy API debug endpoints
+[[redirects]]
+  from = "/.netlify/functions/api/debug/*"
+  to = "/.netlify/functions/api-debug"
+  status = 200
+  force = true
+
 # Handle SPA routing
 [[redirects]]
   from = "/*"
