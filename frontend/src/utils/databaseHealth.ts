@@ -2,7 +2,6 @@
 import { supabase } from './supabase';
 import { getAuthenticatedSupabaseClient } from './supabase-helpers';
 import { isNetlifyEnvironment } from './spotify';
-
 // Type definitions
 export interface HealthCheckResult {
   status: 'healthy' | 'missing_tables' | 'error';
@@ -25,8 +24,8 @@ export async function checkDatabaseHealth(): Promise<HealthCheckResult> {
     } catch (error) {
       console.warn('Direct RPC health check failed, trying alternative methods:', error);
       
-      // Only try Netlify function if explicitly enabled
-      if (import.meta.env.VITE_USE_NETLIFY_FUNCTIONS === 'true') {
+      // Only try Netlify function if explicitly enabled or in production
+      if (import.meta.env.VITE_USE_NETLIFY_FUNCTIONS === 'true' || isNetlifyEnvironment()) {
         try {
           return await checkDatabaseHealthViaNetlify();
         } catch (netlifyError) {

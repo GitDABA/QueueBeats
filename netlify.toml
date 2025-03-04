@@ -24,6 +24,13 @@
   path = "/spotify/*"
   function = "spotify-api"
 
+# Add redirect for Spotify API paths
+[[redirects]]
+  from = "/spotify/*"
+  to = "/.netlify/functions/spotify-search"
+  status = 200
+  force = true
+
 # Handle direct function request for testing deployment
 [[redirects]]
   from = "/test"
@@ -35,6 +42,13 @@
 [[redirects]]
   from = "/env-test"
   to = "/.netlify/functions/env-test"
+  status = 200
+  force = true
+
+# Handle API routes according to our API path structure
+[[redirects]]
+  from = "/routes/*"
+  to = "/.netlify/functions/:splat"
   status = 200
   force = true
 

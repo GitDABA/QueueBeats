@@ -672,8 +672,14 @@ export const transferPlayback = async (accessToken: string, deviceId: string) =>
 
 // Check if running in Netlify environment
 export const isNetlifyEnvironment = () => {
+  // Always use Netlify functions when explicitly enabled
+  if (import.meta.env.VITE_USE_NETLIFY_FUNCTIONS === 'true') {
+    return true;
+  }
+  
+  // Also detect Netlify deployment environment
   return window.location.hostname.includes('netlify.app') || 
-         window.location.hostname === 'localhost' && import.meta.env.VITE_USE_NETLIFY_FUNCTIONS === 'true';
+         window.location.hostname === 'queuebeats.netlify.app';
 };
 
 // Get the base URL for Spotify API requests
