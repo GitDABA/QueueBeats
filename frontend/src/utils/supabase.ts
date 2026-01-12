@@ -206,7 +206,12 @@ export const getCurrentUser = async (): Promise<User | null> => {
     ]);
     
     if (error) {
-      console.error('Error getting current user:', error);
+      // AuthSessionMissingError is expected when user isn't logged in - don't log as error
+      const isSessionMissing = error.name === 'AuthSessionMissingError' || 
+        (error as any).__isAuthError;
+      if (!isSessionMissing) {
+        console.error('Error getting current user:', error);
+      }
       return null;
     }
     

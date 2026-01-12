@@ -38,14 +38,18 @@ export const getAuthenticatedSupabaseClient = async (retries = 2) => {
         lastError.message.includes('failed to fetch');
       
       if (!isRetryable || attempt >= retries) {
-        console.error(`Auth client retrieval failed after ${attempt + 1} attempts:`, lastError);
+        // Only log as error if it's an actual error, not just "no session"
+        const isNoSession = lastError.message.includes('No active session');
+        if (!isNoSession) {
+          console.error(`Auth client retrieval failed after ${attempt + 1} attempts:`, lastError);
+        }
         // Return unauthenticated client as fallback
         return { 
           supabase, 
           session: null, 
           userId: null, 
           isAuthenticated: false,
-          error: lastError 
+          error: isNoSession ? null : lastError 
         };
       }
       
